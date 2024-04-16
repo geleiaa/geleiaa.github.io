@@ -13,7 +13,9 @@ categories: rpisec bin-exp
 
 First we go get the source code and compile following the instruction that is commented in the code:
 
-![comp](https://github.com/geleiaa/lowlevel_things/blob/main/imgs/compilelab2ccode.png)
+<div class="col-sm mt-3 mt-md-0">
+    {% include figure.liquid loading="eager" path="assets/img/compilelab2ccode.png" width="400" height="400" class="img-fluid rounded z-depth-1" zoomable=true %}
+</div>
 
 ```
 gcc -O0 -fno-stack-protector lab2C.c -o lab2C
@@ -21,12 +23,16 @@ gcc -O0 -fno-stack-protector lab2C.c -o lab2C
 
 Running the binary we see how to use it:
 
-![usg](https://github.com/geleiaa/lowlevel_things/blob/main/imgs/binusage.png)
+<div class="col-sm mt-3 mt-md-0">
+    {% include figure.liquid loading="eager" path="assets/img/binusage.png" width="200" height="200" class="img-fluid rounded z-depth-1" zoomable=true %}
+</div>
 
 
 Running with a string the binary shows that we are not "authenticated" and set_me is 0. It seems that the binary needs a specific string/password:
 
-![auth](https://github.com/geleiaa/lowlevel_things/blob/main/imgs/notauth.png)
+<div class="col-sm mt-3 mt-md-0">
+    {% include figure.liquid loading="eager" path="assets/img/notauth.png" width="200" height="200" class="img-fluid rounded z-depth-1" zoomable=true %}
+</div>
 
 
 Looking at the binary disassembly, we see that the **strcpy** function is called before a comparison of a memory address with the “0xdeadbeef” bytes. And if this comparison is not true, the flow jumps to the end, prints something and ends execution. But if the comparison is true, a "shell" function will be called.
@@ -35,7 +41,9 @@ Looking at the binary disassembly, we see that the **strcpy** function is called
 $ objdump -dM intel lab2C | grep -A40 "<main>:"
 ```
 
-![disas](https://github.com/geleiaa/lowlevel_things/blob/main/imgs/jmp.png)
+<div class="col-sm mt-3 mt-md-0">
+    {% include figure.liquid loading="eager" path="assets/img/jmp.png" class="img-fluid rounded z-depth-1" zoomable=true %}
+</div>
 
 
 Looking at the disassembly of the shell function, we don't see much useful stuff, just a **puts** function that can display some string and we also see a **system** function being called.
@@ -44,7 +52,9 @@ Looking at the disassembly of the shell function, we don't see much useful stuff
 $ objdump -dM intel lab2C | grep -A12 "<shell>:"
 ```
 
-![disasshell](https://github.com/geleiaa/lowlevel_things/blob/main/imgs/disasshell.png)
+<div class="col-sm mt-3 mt-md-0">
+    {% include figure.liquid loading="eager" path="assets/img/disasshell.png" class="img-fluid rounded z-depth-1" zoomable=true %}
+</div>
 
 
 ### Now let's debug the binary to see what it does
@@ -52,22 +62,30 @@ $ objdump -dM intel lab2C | grep -A12 "<shell>:"
 
 Looking at the disassembly with gdb + peda we can better see the execution flow of the main function:
 
-![gdbdisas](https://github.com/geleiaa/lowlevel_things/blob/main/imgs/gdbdisas.png)
+<div class="col-sm mt-3 mt-md-0">
+    {% include figure.liquid loading="eager" path="assets/img/gdbdisas.png" class="img-fluid rounded z-depth-1" zoomable=true %}
+</div>
 
 
 Running the binary in gdb without passing any input string, the flow is diverted to a **printf** that shows the usage and then a jump throws the flow to the end of the execution:
 
 * check input (**cmp DWORD PTR [rbp-0x24],0x2**)
 
-![withoutarg1](https://github.com/geleiaa/lowlevel_things/blob/main/imgs/withoutarg1.png)
+<div class="col-sm mt-3 mt-md-0">
+    {% include figure.liquid loading="eager" path="assets/img/withoutarg1.png" class="img-fluid rounded z-depth-1" zoomable=true %}
+</div>
 
 * if not have input, print the usage
 
-![withoutarg2](https://github.com/geleiaa/lowlevel_things/blob/main/imgs/withoutarg2.png)
+<div class="col-sm mt-3 mt-md-0">
+    {% include figure.liquid loading="eager" path="assets/img/withoutarg2.png" class="img-fluid rounded z-depth-1" zoomable=true %}
+</div>
 
 * jump to the end
 
-![withoutarg3](https://github.com/geleiaa/lowlevel_things/blob/main/imgs/withoutarg3.png)
+<div class="col-sm mt-3 mt-md-0">
+    {% include figure.liquid loading="eager" path="assets/img/withoutarg3.png" class="img-fluid rounded z-depth-1" zoomable=true %}
+</div>
 
 
 
@@ -86,13 +104,17 @@ gdb-peda$ r GELEIA
 
 Now running with a input the exec flow throws us to another place. First compare if have any args, so **je** (jump equal) go to address **<main+59>**.
 
-![witharg1](https://github.com/geleiaa/lowlevel_things/blob/main/imgs/witharg1.png)
+<div class="col-sm mt-3 mt-md-0">
+    {% include figure.liquid loading="eager" path="assets/img/witharg1.png" class="img-fluid rounded z-depth-1" zoomable=true %}
+</div>
 
 
 After some steps we arrive at the **strcpy** function that we saw before. We can see that the input is moved through the registers until it reaches the **strcpy** function. And probably the input is copied somewhere by the **strcpy** function. Soon after, a comparison of address **DWORD PTR [rbp-0x4]** with "0xdeadbeef" takes place.
 
 
-![witharg2](https://github.com/geleiaa/lowlevel_things/blob/main/imgs/witharg2.png)
+<div class="col-sm mt-3 mt-md-0">
+    {% include figure.liquid loading="eager" path="assets/img/witharg2.png" class="img-fluid rounded z-depth-1" zoomable=true %}
+</div>
 
 
 After comparing if **DWORD PTR [rbp-0x4]** address is equal to "0xdeadbeef" the flow jump to "shell" function. If not equal the flow jump to a **printf** with a message "Not authenticated. set_me was 0" and finishe execution.
@@ -100,12 +122,16 @@ After comparing if **DWORD PTR [rbp-0x4]** address is equal to "0xdeadbeef" the 
 
 * jump to end
 
-![witharg3](https://github.com/geleiaa/lowlevel_things/blob/main/imgs/witharg3.png)
+<div class="col-sm mt-3 mt-md-0">
+    {% include figure.liquid loading="eager" path="assets/img/witharg3.png" class="img-fluid rounded z-depth-1" zoomable=true %}
+</div>
 
 
 * print message and finishes
 
-![witharg4](https://github.com/geleiaa/lowlevel_things/blob/main/imgs/witharg4.png)
+<div class="col-sm mt-3 mt-md-0">
+    {% include figure.liquid loading="eager" path="assets/img/witharg4.png" class="img-fluid rounded z-depth-1" zoomable=true %}
+</div>
 
 
 
@@ -133,21 +159,30 @@ Getting close to the part that checks the input we can see the alphabet buffer b
 
 * first buffer go to **RAX** after go to **RDX**
 
-![buffmove1](https://github.com/geleiaa/lowlevel_things/blob/main/imgs/buffmove1.png)
+<div class="col-sm mt-3 mt-md-0">
+    {% include figure.liquid loading="eager" path="assets/img/buffmove1.png" class="img-fluid rounded z-depth-1" zoomable=true %}
+</div>
 
 
-![buffmove2](https://github.com/geleiaa/lowlevel_things/blob/main/imgs/buffmove2.png)
+<div class="col-sm mt-3 mt-md-0">
+    {% include figure.liquid loading="eager" path="assets/img/buffmove2.png" class="img-fluid rounded z-depth-1" zoomable=true %}
+</div>
 
 
 
 Passing in **strcpy** function the buffer is stored and after this the address **DWORD PTR [rbp-0x4]** will be compared.
 
-![compare1](https://github.com/geleiaa/lowlevel_things/blob/main/imgs/compare1.png)
+
+<div class="col-sm mt-3 mt-md-0">
+    {% include figure.liquid loading="eager" path="assets/img/compare1.png" class="img-fluid rounded z-depth-1" zoomable=true %}
+</div>
 
 
 So if we look at what's at that address, we see the bytes that overwrote the memory after the leak:
 
-![compare2](https://github.com/geleiaa/lowlevel_things/blob/main/imgs/compare2.png)
+<div class="col-sm mt-3 mt-md-0">
+    {% include figure.liquid loading="eager" path="assets/img/compare2.png" class="img-fluid rounded z-depth-1" zoomable=true %}
+</div>
 
 
 Basically the variable that stores the input has a limit of 15 bytes. Example:
@@ -192,27 +227,41 @@ Then let's move on to the part that matters:
 
 * we can see the exploration buffer being moved.
 
-![exp1](https://github.com/geleiaa/lowlevel_things/blob/main/imgs/exp1.png)
+<div class="col-sm mt-3 mt-md-0">
+    {% include figure.liquid loading="eager" path="assets/img/exp1.png" class="img-fluid rounded z-depth-1" zoomable=true %}
+</div>
 
 
 * Coming to the comparison, we see that the buffer overwrote the variable where it is stored and went to the memory of the next instruction.
 
-![exp2](https://github.com/geleiaa/lowlevel_things/blob/main/imgs/exp2.png)
+<div class="col-sm mt-3 mt-md-0">
+    {% include figure.liquid loading="eager" path="assets/img/exp2.png" class="img-fluid rounded z-depth-1" zoomable=true %}
+</div>
 
-![exp3](https://github.com/geleiaa/lowlevel_things/blob/main/imgs/exp3.png)
+<div class="col-sm mt-3 mt-md-0">
+    {% include figure.liquid loading="eager" path="assets/img/exp3.png" class="img-fluid rounded z-depth-1" zoomable=true %}
+</div>
+
 
 
 * Since we have the memory overwritten, then the execution flow goes to the shell function as expected.
 
-![exp4](https://github.com/geleiaa/lowlevel_things/blob/main/imgs/exp4.png)
+<div class="col-sm mt-3 mt-md-0">
+    {% include figure.liquid loading="eager" path="assets/img/exp4.png" class="img-fluid rounded z-depth-1" zoomable=true %}
+</div>
 
-![exp5](https://github.com/geleiaa/lowlevel_things/blob/main/imgs/exp5.png)
+
+<div class="col-sm mt-3 mt-md-0">
+    {% include figure.liquid loading="eager" path="assets/img/exp5.png" class="img-fluid rounded z-depth-1" zoomable=true %}
+</div>
 
 
 
 * Now we get to the shell function and see what's in it.
 
-![exp6](https://github.com/geleiaa/lowlevel_things/blob/main/imgs/exp6.png)
+<div class="col-sm mt-3 mt-md-0">
+    {% include figure.liquid loading="eager" path="assets/img/exp6.png" class="img-fluid rounded z-depth-1" zoomable=true %}
+</div>
 
 
 So it looks like we did this...

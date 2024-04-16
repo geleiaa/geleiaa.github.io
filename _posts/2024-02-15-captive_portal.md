@@ -46,7 +46,11 @@ Nota: Tive problemas para clonar a pagina direto do link acima, então tive que 
 
 Faça download dos arquivos da pagina, mova-os para /var/www/html, starte o serviço do apache e acesse o localhost (127.0.0.1) no navegador.
 
-![phishrouterpg](https://github.com/geleiaa/wirelesssss/blob/main/images/pihishrouterpg.png)
+
+<div class="col-sm mt-3 mt-md-0">
+    {% include figure.liquid loading="eager" path="assets/img/pihishrouterpg.png" class="img-fluid rounded z-depth-1" zoomable=true %}
+</div>
+
 
 Nessa parte você precisa ajustar os paths dos arquivos estaticos de css (no html) para a pagina ficar legivel (aqui que entra o conhecimento de frontend). Se a pagina estiver normal, rode o seguinte comando para clona-la:
 
@@ -91,9 +95,15 @@ Você tera que editar a pagina antes de subir a rede falsa. Fazendo isso o backe
 
 Depois de alterações o pagina deve ficar assim:
 
-![inputhtmledit](https://github.com/geleiaa/wirelesssss/blob/main/images/inputhtmledit.png)
+<div class="col-sm mt-3 mt-md-0">
+    {% include figure.liquid loading="eager" path="assets/img/inputhtmledit.png" class="img-fluid rounded z-depth-1" zoomable=true %}
+</div>
 
-![pgrendered](https://github.com/geleiaa/wirelesssss/blob/main/images/pgrendered.png)
+
+<div class="col-sm mt-3 mt-md-0">
+    {% include figure.liquid loading="eager" path="assets/img/pgrendered.png" class="img-fluid rounded z-depth-1" zoomable=true %}
+</div>
+
 
 Nota: Você pode fazer o mesmo processo de editar o html para mudar outras partes, como o logo do vendor do roteador alvo, traduzir a pagina para portugues e etc. Isso para aumentar a credibilidade do phishing (fica critério do atacante).
 
@@ -115,11 +125,18 @@ Dica:
 
 Se estiver tudo certo o fake ap vai ser iniciado como uma rede OPEN e você poderá ve-la igual qualquer outra rede (mas não se conecte a rede quando estiver fazendo o ataque). Você verá nos logs do terminal que o ap está ativo:
 
-![fakeapok](https://github.com/geleiaa/wirelesssss/blob/main/images/fakeapok.png)
+
+<div class="col-sm mt-3 mt-md-0">
+    {% include figure.liquid loading="eager" path="assets/img/fakeapok.png" class="img-fluid rounded z-depth-1" zoomable=true %}
+</div>
+
 
 exemplo de visão do alvo
 
-![clientexample](https://github.com/geleiaa/wirelesssss/blob/main/images/clientexample.png)
+<div class="col-sm mt-3 mt-md-0">
+    {% include figure.liquid loading="eager" path="assets/img/clientexample.png" class="img-fluid rounded z-depth-1" zoomable=true %}
+</div>
+
 
 #### Deauth na rede alvo:
 
@@ -136,17 +153,27 @@ Dica: o comando acima manda deauth para o broadcast da rede alvo, ou seja, todos
 
 Quando alguém se conectar ao fake ap, os logs vão aparecer na tela do terminal junto com os logs do DNS-spoofing funcionando e redirecionando os dispositivos conectados para a pagina de phishing:
 
-![clientconect](https://github.com/geleiaa/wirelesssss/blob/main/images/clientconect.png)
+
+<div class="col-sm mt-3 mt-md-0">
+    {% include figure.liquid loading="eager" path="assets/img/clientconect.png" width="800" height="800" class="img-fluid rounded z-depth-1" zoomable=true %}
+</div>
+
 
 Conforme o client vai tentando acessar outras paginas pelo navegador o ataque de spoofing continua redirencionando para a pagina de phishing.
 
 
 exemplo de visão do alvo em smartphone
 
-![phoneexample](https://github.com/geleiaa/wirelesssss/blob/main/images/phoneexample.png)
+
+<div class="col-sm mt-3 mt-md-0">
+    {% include figure.liquid loading="eager" path="assets/img/phoneexample.png" width="300" height="300" class="img-fluid rounded z-depth-1" zoomable=true %}
+</div>
+
 
 O client conectado verá o pagina de atualização de firmware e se a sua eng-social der certo, ele digitara a senha pensando que há uma atualização de firmware do roteador... e a psk digitada vai aparecer nos logs do fake ap:
 
-![recvpsk](https://github.com/geleiaa/wirelesssss/blob/main/images/recvpsk.png)
+<div class="col-sm mt-3 mt-md-0">
+    {% include figure.liquid loading="eager" path="assets/img/recvpsk.png" width="500" height="500" class="img-fluid rounded z-depth-1" zoomable=true %}
+</div>
 
 

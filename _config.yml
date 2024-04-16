@@ -8,7 +8,7 @@ middle_name:
 last_name: 
 email: geleiaa@duck.com
 description: > # the ">" symbol means to ignore newlines until "footer_text:"
-  A simple, whitespace theme for academics. Based on [*folio](https://github.com/bogoli/-folio) design.
+  Blog de hackinagens.
 
 url: https://geleiaa.github.io # the base hostname & protocol for your site
 baseurl:  # the subpath of your site, e.g. /blog/. Leave blank for root
