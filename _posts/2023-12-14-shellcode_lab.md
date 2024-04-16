@@ -20,7 +20,7 @@ gcc -z execstack -fno-stack-protector lab3C.c -o lab3C
 Running the binary we see that it asks for a username. And when I try to enter any username, I get "incorrect username":
 
 <div class="col-sm mt-3 mt-md-0">
-   {% include figure.liquid loading="eager" path="assets/img/runbin.png" class="img-fluid rounded z-depth-1" zoomable=true %}
+   {% include figure.liquid loading="eager" path="assets/img/runbin.png" width="300" height="300" class="img-fluid rounded z-depth-1" zoomable=true %}
 </div>
 
 
@@ -31,7 +31,7 @@ $ strings lab3C
 ```
 
 <div class="col-sm mt-3 mt-md-0">
-   {% include figure.liquid loading="eager" path="assets/img/binstrings.png" class="img-fluid rounded z-depth-1" zoomable=true %}
+   {% include figure.liquid loading="eager" path="assets/img/binstrings.png" width="300" height="300" class="img-fluid rounded z-depth-1" zoomable=true %}
 </div>
 
 
@@ -48,7 +48,7 @@ We can also see a preview of the functions that binary uses:
 Testing the username and password I get a slightly strange result...
 
 <div class="col-sm mt-3 mt-md-0">
-   {% include figure.liquid loading="eager" path="assets/img/testuserpass.png" class="img-fluid rounded z-depth-1" zoomable=true %}
+   {% include figure.liquid loading="eager" path="assets/img/testuserpass.png" width="300" height="300" class="img-fluid rounded z-depth-1" zoomable=true %}
 </div>
 
 
@@ -139,7 +139,7 @@ We see that the functions probably take the input and do a comparison using the 
 Following with what we already know, we first have to test whether any variable can be overflowed. Putting breakpoints in the verification functions right after the input goes to the binary and put a pattern on the inputs for see how it is handled.
 
 <div class="col-sm mt-3 mt-md-0">
-   {% include figure.liquid loading="eager" path="assets/img/breakfuncs.png" class="img-fluid rounded z-depth-1" zoomable=true %}
+   {% include figure.liquid loading="eager" path="assets/img/breakfuncs.png" width="300" height="300" class="img-fluid rounded z-depth-1" zoomable=true %}
 </div>
 
 
@@ -232,7 +232,7 @@ If we look at the disassembly of the main function we see that the address of th
 And checking the variable's memory we see the string "rpisec".
 
 <div class="col-sm mt-3 mt-md-0">
-   {% include figure.liquid loading="eager" path="assets/img/usrnmvar2.png" class="img-fluid rounded z-depth-1" zoomable=true %}
+   {% include figure.liquid loading="eager" path="assets/img/usrnmvar2.png" width="500" height="500" class="img-fluid rounded z-depth-1" zoomable=true %}
 </div>
 
 

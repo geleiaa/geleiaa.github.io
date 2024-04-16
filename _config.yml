@@ -121,7 +121,7 @@ bing_site_verification: # out your bing-site-verification ID (Bing Webmaster)
 # -----------------------------------------------------------------------------
 
 blog_name: Geleia's blog # blog_name will be displayed in your blog page
-blog_description: blog de hackingens
+blog_description: blog de hackinagens
 permalink: /blog/:year/:title/
 
 # Pagination

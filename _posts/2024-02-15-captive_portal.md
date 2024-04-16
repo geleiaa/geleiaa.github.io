@@ -110,7 +110,7 @@ Nota: Você pode fazer o mesmo processo de editar o html para mudar outras parte
 
 ### 4 - subindo o fake ap:
 
-Agora é a hora que vamos precisar usar as duas placas de rede (adapatadores) ou só uma, se a placa suportar os modos necessarios. Para essa demonstração usei placas com os seguintes chipsets: RTL8812AU (suporta modo AP) e RTL8192EU (suporta modo Mon)
+Agora é a hora que vamos precisar usar as duas placas de rede (adaptadores) ou só uma, se a placa suportar os modos necessarios. Para essa demonstração usei placas com os seguintes chipsets: RTL8812AU (suporta modo AP) e RTL8192EU (suporta modo Mon)
 
 
 #### Starte o fake ap com a placa que suporta AP:

@@ -31,7 +31,7 @@ Running the binary we see how to use it:
 Running with a string the binary shows that we are not "authenticated" and set_me is 0. It seems that the binary needs a specific string/password:
 
 <div class="col-sm mt-3 mt-md-0">
-    {% include figure.liquid loading="eager" path="assets/img/notauth.png" width="200" height="200" class="img-fluid rounded z-depth-1" zoomable=true %}
+    {% include figure.liquid loading="eager" path="assets/img/notauth.png" width="400" height="400" class="img-fluid rounded z-depth-1" zoomable=true %}
 </div>
 
 
@@ -42,7 +42,7 @@ $ objdump -dM intel lab2C | grep -A40 "<main>:"
 ```
 
 <div class="col-sm mt-3 mt-md-0">
-    {% include figure.liquid loading="eager" path="assets/img/jmp.png" class="img-fluid rounded z-depth-1" zoomable=true %}
+    {% include figure.liquid loading="eager" path="assets/img/jmp.png" width="300" height="300" class="img-fluid rounded z-depth-1" zoomable=true %}
 </div>
 
 
@@ -113,7 +113,7 @@ After some steps we arrive at the **strcpy** function that we saw before. We can
 
 
 <div class="col-sm mt-3 mt-md-0">
-    {% include figure.liquid loading="eager" path="assets/img/witharg2.png" class="img-fluid rounded z-depth-1" zoomable=true %}
+    {% include figure.liquid loading="eager" path="assets/img/witharg2.png" width="300" height="300" class="img-fluid rounded z-depth-1" zoomable=true %}
 </div>
 
 
@@ -181,7 +181,7 @@ Passing in **strcpy** function the buffer is stored and after this the address *
 So if we look at what's at that address, we see the bytes that overwrote the memory after the leak:
 
 <div class="col-sm mt-3 mt-md-0">
-    {% include figure.liquid loading="eager" path="assets/img/compare2.png" class="img-fluid rounded z-depth-1" zoomable=true %}
+    {% include figure.liquid loading="eager" path="assets/img/compare2.png" width="500" height="500" class="img-fluid rounded z-depth-1" zoomable=true %}
 </div>
 
 
@@ -239,7 +239,7 @@ Then let's move on to the part that matters:
 </div>
 
 <div class="col-sm mt-3 mt-md-0">
-    {% include figure.liquid loading="eager" path="assets/img/exp3.png" class="img-fluid rounded z-depth-1" zoomable=true %}
+    {% include figure.liquid loading="eager" path="assets/img/exp3.png" width="500" height="500" class="img-fluid rounded z-depth-1" zoomable=true %}
 </div>
 
 
