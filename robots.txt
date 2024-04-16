@@ -1,0 +1,4 @@
+User-agent: *
+Disallow:
+
+Sitemap: https://geleiaa.github.io/sitemap.xml
