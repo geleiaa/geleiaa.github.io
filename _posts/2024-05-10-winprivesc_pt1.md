@@ -1,12 +1,12 @@
 ---
 layout: post
-title: Windows Priv-Esc pt1
+title: windows priv-esc pt1
 date: 2024-05-10
-description: Windows Priv-Esc Series
+description: serie de windows Priv-Esc
 categories: windows bhatagem
 ---
 
-# Windows LPE notes...
+## Windows LPE notes...
 
 ```
 - Pri-esc base:
@@ -48,23 +48,18 @@ A segunda diferença é que os Privilegies são atribuídos a contas de usuário
     - arquivos/pastas, registry keys, services, network shares, access tokens...
 ```
 
-- O ```User Access control``` (UAC) é um componente fundamental da visão geral de segurança da MS. O UAC ajuda a mitigar o impacto de malwares.
-
-Cada aplicativo que requer o administrator access token deve solicitar-lo. A única exceção é o relacionamento que existe entre ```parent processes```. Os ```Child Processes``` herdam o acess token do ```parent process```. Entretanto, os parents e child process devem ter o mesmo ```Integrity Level```. 
+- O ```User Access control``` (UAC) é um componente fundamental da visão geral de segurança da MS. O UAC ajuda a mitigar o impacto de malwares. Cada aplicativo que requer o administrator access token deve solicitar-lo. A única exceção é o relacionamento que existe entre ```parent processes```. Os ```Child Processes``` herdam o acess token do ```parent process```. Entretanto, os parents e child process devem ter o mesmo ```Integrity Level```. 
 O Windows protege processes marcando seus integrity levels. Os Integrity Levels são medidas de confiança. Um programa integrity “alta” é aquele que executa tarefas que modificam dados do sistema, como um programa de particionamento de disco, enquanto um programa de integrity “baixa” é aquele que executa tarefas que podem comprometer o sistema operacional, como um navegador da Web. 
 Programas com integrity level mais baixos não podem modificar dados em programas com integrity levels mais altos. 
 Quando um usuário padrão tenta executar um programa que requer um access token de administrator, o UAC exige que o usuário forneça credenciais de administrador válidas.
 
-fonte:
-https://docs.microsoft.com/en-us/windows/security/identity-protection/user-account-control/user-account-control-overview
-
 
 - Integrity Level
-  - https://book.hacktricks.xyz/windows-hardening/windows-local-privilege-escalation/integrity-levels
+  - [https://book.hacktricks.xyz/windows-hardening/windows-local-privilege-escalation/integrity-levels](https://book.hacktricks.xyz/windows-hardening/windows-local-privilege-escalation/integrity-levels)
 
 - Filtered Admin Token or Restricted Access Token
-  - https://blog.palantir.com/windows-privilege-abuse-auditing-detection-and-defense-3078a403d74e
-  - https://learn.microsoft.com/en-us/windows/win32/secauthz/restricted-tokens
+  - [https://blog.palantir.com/windows-privilege-abuse-auditing-detection-and-defense-3078a403d74e](https://blog.palantir.com/windows-privilege-abuse-auditing-detection-and-defense-3078a403d74e)
+  - [https://learn.microsoft.com/en-us/windows/win32/secauthz/restricted-tokens](https://learn.microsoft.com/en-us/windows/win32/secauthz/restricted-tokens)
 
 - Permissões "perigosas"?
   - ```SeBackupPriv``` - read qualquer arquivo
@@ -79,16 +74,16 @@ https://docs.microsoft.com/en-us/windows/security/identity-protection/user-accou
 
 #### READ/REFS
 
-- https://www.pwndefend.com/2021/08/18/windows-security-fundamentals-lpe/
-- https://dmfrsecurity.com/2021/05/16/review-red-team-operator-privilege-escalation-in-windows-course-by-sektor7-institute/
+- [https://www.pwndefend.com/2021/08/18/windows-security-fundamentals-lpe/](https://www.pwndefend.com/2021/08/18/windows-security-fundamentals-lpe/)
+- [https://dmfrsecurity.com/2021/05/16/review-red-team-operator-privilege-escalation-in-windows-course-by-sektor7-institute/](https://dmfrsecurity.com/2021/05/16/review-red-team-operator-privilege-escalation-in-windows-course-by-sektor7-institute/)
 
 
 >___
 
 
-# Gathering Creds
+## Gathering Creds
 
-## Procurando senhas em plaintext
+### Procurando senhas em plaintext
 
 - lista todos os diretorios a partir do c:\
 - ``` C:\> dir /b /a /s c:\ > output.txt ```
@@ -100,7 +95,7 @@ https://docs.microsoft.com/en-us/windows/security/identity-protection/user-accou
 https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/dir#examples
 
 
-## Nomes e Extenções de arquivos interessantes para verificar
+### Nomes e Extenções de arquivos interessantes para verificar
 
 - Extenções: install, backup, .bak, .log, .bat, .cmd, .vbs, .cnf, .conf, .conf, ,ini, .xml, .txt, .gpg, .pgp, .p12, .der, .crs, .cer, id_rsa, id_dsa, .ovpn, vnc,
 ftp, ssh, vpn, git, .kdbx, .db
@@ -111,7 +106,7 @@ ftp, ssh, vpn, git, .kdbx, .db
 
 
 
-## Arquivos nos Registries 
+### Arquivos nos Registries 
 
 - ``` req query "HKCU\Software\ORL\WinVNC3\Passowrd" ```
  
@@ -121,14 +116,13 @@ ftp, ssh, vpn, git, .kdbx, .db
 
 - ``` req query "HKCU\Software\SimonTatham\PuTTY\Sessions\local" ```
 
-
 - ``` req query HKLM /f password /c REG_SZ /s ```
 
 - ``` req query HKLM /f password /c REG_SZ /s ```
 
 
 
-## Abusing Credential Manager
+### Abusing Credential Manager
 
 - Credential Manager
   - O Credential Manager é uma espécie de cofre digital dentro do sistema Windows. O Windows armazena credenciais de registry, como usernames e senhas...
@@ -153,7 +147,7 @@ ftp, ssh, vpn, git, .kdbx, .db
 
 
 
-## Extraindo creds do Credential Manager
+### Extraindo creds do Credential Manager
 
 - Script from Empire...
 
@@ -161,7 +155,7 @@ ftp, ssh, vpn, git, .kdbx, .db
 
 
 
-## Popup local para pegar as creds de um user
+### Popup local para pegar as creds de um user
 
 - Cria um popup que pede a senha do usuário atual
 
@@ -171,7 +165,7 @@ ftp, ssh, vpn, git, .kdbx, .db
 
 
 Links adicionais:
-- https://fuzzysecurity.com/tutorials/16.html
-- https://xz.aliyun.com/t/3618
+- [https://fuzzysecurity.com/tutorials/16.html](https://fuzzysecurity.com/tutorials/16.html)
+- [https://xz.aliyun.com/t/3618](https://xz.aliyun.com/t/3618)
 
 >___
