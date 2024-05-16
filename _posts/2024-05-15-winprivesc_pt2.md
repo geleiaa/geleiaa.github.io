@@ -6,13 +6,12 @@ description: serie de windows Priv-Esc
 categories: windows bhatagem
 ---
 
-#### A primeira parte dessa serie teve algumas notas sobre services, permissões, privilégios, etc. 
-#### Logo quando terminei a primeira vi que ja estava muita coisa pra um post só, então decidi dividir em mais duas partes, essa aqui e mais uma em breve...
-#### Essa segunda parte aborda algumas tecnicas sobre priv-esc com permissões de services e também deixei algumas referências para leitura adicional.
+A primeira parte dessa serie teve algumas notas sobre services, permissões, privilégios, etc. Logo quando terminei a primeira vi que ja estava muita coisa pra um post só, então decidi dividir em mais duas partes, sendo três partes no total...
+Essa segunda parte aborda algumas tecnicas sobre priv-esc com permissões de services e junto algumas referências para leitura adicional.
 
-## Insecured Objects (Non Admin Medium IL)
+## # Insecured Objects (Non Admin Medium IL)
 
-### Insecured Services
+> ### Insecured Services
 
 #### Priv Esc usando insecured objects, especificamente abusando dos Windows Services.
 
@@ -43,7 +42,7 @@ categories: windows bhatagem
 
 
 - Alterar a config e restart no service (se precisar)
-- ``` sc config sshd binPath= "c:\implant\implant.exe" ```
+- ``` sc config <serivce-name> binPath= "c:\implant\implant.exe" ```
 - ``` sc start <service-name> ```
 
 - Exploration
