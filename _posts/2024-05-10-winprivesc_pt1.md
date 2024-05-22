@@ -9,7 +9,7 @@ categories: windows bhatagem
 ## Windows LPE notes...
 
 ```
-- Pri-esc base:
+- Priv-esc base:
   1. Pegar SYSTEM perm
   2. Assumir outro usuário
   3. Mudar integrity levels
@@ -81,9 +81,9 @@ Quando um usuário padrão tenta executar um programa que requer um access token
 >___
 
 
-## Gathering Creds
+### # Gathering Creds
 
-### Procurando senhas em plaintext
+> ### Procurando senhas em plaintext
 
 - lista todos os diretorios a partir do c:\
 - ``` C:\> dir /b /a /s c:\ > output.txt ```
@@ -95,7 +95,8 @@ Quando um usuário padrão tenta executar um programa que requer um access token
 https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/dir#examples
 
 
-### Nomes e Extenções de arquivos interessantes para verificar
+
+> ### Nomes e Extenções de arquivos interessantes para verificar
 
 - Extenções: install, backup, .bak, .log, .bat, .cmd, .vbs, .cnf, .conf, .conf, ,ini, .xml, .txt, .gpg, .pgp, .p12, .der, .crs, .cer, id_rsa, id_dsa, .ovpn, vnc,
 ftp, ssh, vpn, git, .kdbx, .db
@@ -105,8 +106,7 @@ ftp, ssh, vpn, git, .kdbx, .db
 - ``` C:\> type output.txt | findstr /i algumas extenção ```
 
 
-
-### Arquivos nos Registries 
+> ### Arquivos nos Registries 
 
 - ``` req query "HKCU\Software\ORL\WinVNC3\Passowrd" ```
  
@@ -122,7 +122,7 @@ ftp, ssh, vpn, git, .kdbx, .db
 
 
 
-### Abusing Credential Manager
+> ### Abusing Credential Manager
 
 - Credential Manager
   - O Credential Manager é uma espécie de cofre digital dentro do sistema Windows. O Windows armazena credenciais de registry, como usernames e senhas...
@@ -132,7 +132,7 @@ ftp, ssh, vpn, git, .kdbx, .db
   - O cmdkey também permite listar essas informações.
     - ``` C:\> cmdkey /list ```
 
-- We can access actualy the Admin home directory and run processes as Admin:
+- Podemos executar como Admin também:
   - ``` C:\> runas /user:admin cmd.exe``` <===== precisa de admin pass
 
   - ``` C:\> runas /savedcred /user:admin cmd.exe ```
@@ -147,7 +147,7 @@ ftp, ssh, vpn, git, .kdbx, .db
 
 
 
-### Extraindo creds do Credential Manager
+> ### Extraindo creds do Credential Manager
 
 - Script from Empire...
 
@@ -155,7 +155,7 @@ ftp, ssh, vpn, git, .kdbx, .db
 
 
 
-### Popup local para pegar as creds de um user
+> ### Popup local para pegar as creds de um user
 
 - Cria um popup que pede a senha do usuário atual
 
