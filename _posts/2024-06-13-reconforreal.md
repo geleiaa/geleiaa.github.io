@@ -12,7 +12,7 @@ notes of [@jhaddix](https://twitter.com/Jhaddix) lives
 
 {% include figure.liquid loading="eager" path="assets/img/path.png" width="500" height="500" class="img-fluid rounded z-depth-1" zoomable=true %}
 
-> ## [ ] Assets discoveries
+> ## Assets discovery
 
 - #### Acquisitions: empresas dentro de empresas
   - [ ] [https://www.crunchbase.com/](https://www.crunchbase.com/)
@@ -42,6 +42,7 @@ notes of [@jhaddix](https://twitter.com/Jhaddix) lives
 
 - #### Reverse Whois and DNS permite encontrar mais infos a partir de um nome, email, domain. etc 
   - [ ] [https://centralops.net/co/](https://centralops.net/co/)
+  - [ ] [https://dnsdumpster.com/](https://dnsdumpster.com/)
   - [ ] [https://viewdns.info/reversewhois/](https://viewdns.info/reversewhois/)
   - [ ] [https://domaineye.com/reverse-whois](https://domaineye.com/reverse-whois)
   - [ ] [https://www.reversewhois.io/](https://www.reversewhois.io/)
@@ -64,9 +65,10 @@ notes of [@jhaddix](https://twitter.com/Jhaddix) lives
   - [https://book.hacktricks.xyz/generic-methodologies-and-resources/external-recon-methodology](https://book.hacktricks.xyz/generic-methodologies-and-resources/external-recon-methodology)
   - [https://github.com/geleiaa/Reconnaissance_notes/blob/main/hakaiNotes.md](https://github.com/geleiaa/Reconnaissance_notes/blob/main/hakaiNotes.md)
   - [https://gowthams.gitbook.io/bughunter-handbook/list-of-vulnerabilities-bugs/recon-and-osint/recon](https://gowthams.gitbook.io/bughunter-handbook/list-of-vulnerabilities-bugs/recon-and-osint/recon)
+  - OneLiners [https://github.com/KingOfBugbounty/KingOfBugBountyTips](https://github.com/KingOfBugbounty/KingOfBugBountyTips)
 
 
-> ## [ ] Domains and SubDomains
+> ## Domains and SubDomains
 
 - #### [ ] Reverse whois and dns
 
@@ -100,25 +102,21 @@ notes of [@jhaddix](https://twitter.com/Jhaddix) lives
 
 - #### [ ] Passive Sub Enum
 
-- ##### historical subdomain
+- ##### certs, passivos e historical subdomain
 
-  - securitytrails.com
-  - subdomainfinder.c99.nl
-  - web.archive.org
-  - dnsdumpster.com
-  - github.com/Screetsec/Sudomy
-
-- ##### certs e passivos
-
+  - [securitytrails.com](https://securitytrails.com/)
+  - [subdomainfinder.c99.nl](https://subdomainfinder.c99.nl/)
+  - [wayback machine](https://web.archive.org/)
   - subfinder
   - certspotter [https://sslmate.com/certspotter/](https://sslmate.com/certspotter/) (free tools)
   - ctfr (crt.sh) [https://github.com/UnaPibaGeek/ctfr](https://github.com/UnaPibaGeek/ctfr)
   - chaos.projectdiscovery.io
+  - [Sudomy](https://github.com/Screetsec/Sudomy)
 
 
 1. [ ] [Subfinder](https://github.com/projectdiscovery/subfinder)
       - ```subfinder -d DOMAIN -silent -all -o subfinder_output | httpx -silent -o httpx_output```
-      - ```subfinder -d domain.com -silent | httpx -status | gau```
+      - ```subfinder -d domain.com -silent | httpx -status```
       - ```subfinder -d domain | httpx -csp-probe -title```
 
 2. [ ] Github-subdomains.py é um script parte do repositório de enumeração Github chamado “github-search”. Ele consultará a API do Github em busca de subdomains [https://github.com/gwen001/github-search/blob/master/github-subdomains.py](https://github.com/gwen001/github-search/blob/master/github-subdomains.py)
@@ -154,7 +152,7 @@ notes of [@jhaddix](https://twitter.com/Jhaddix) lives
 
 
 
-> ## [ ] Recon in Cloud based infra
+> ## Recon in Cloud based infra
 
 cloud ips:
 
@@ -199,7 +197,7 @@ Google Cloud: [http://bit.ly/2HAsZFm](http://bit.ly/2HAsZFm)
 - #### [ ] CDN checker [https://github.com/projectdiscovery/cdncheck](https://github.com/projectdiscovery/cdncheck)
 
 
-> ## [ ] Github
+> ## Github
 
 - #### [ ] _cs.github_
  
@@ -211,8 +209,6 @@ Google Cloud: [http://bit.ly/2HAsZFm](http://bit.ly/2HAsZFm)
 
 
 - #### [ ] git exposed
-
-- [ ] ``` $ echo domain.com | subfinder -silent | httpx -silent | anew file ```
  
 - [ ] ``` $ echo domain.com | subfinder -silent | xargs -I@ sh -c 'goop @ -f' ```
 
@@ -228,13 +224,11 @@ Google Cloud: [http://bit.ly/2HAsZFm](http://bit.ly/2HAsZFm)
 
 
 
-> ## [ ] After sub enum
+> ## After sub enum
 
 - [ ] after subdomain enum verify if domains is active/online
-
-and
-
-> #### [ ] Screeshotting: analysis all screeshot and priorize domains to test (eyewitness, aquatone, httpscreenshot)
+- [ ] crawling, params discovery, vulns check
+- #### [ ] Screeshotting: analysis all screeshot and priorize domains to test (eyewitness, aquatone, httpscreenshot)
 
   - [https://github.com/michenriksen/aquatone](https://github.com/michenriksen/aquatone)
   - [https://github.com/breenmachine/httpscreenshot](https://github.com/breenmachine/httpscreenshot)
@@ -275,7 +269,7 @@ and
   - [ ] use passive methods first, later if you care use active methods
 
 
-> ### [ ] Content/Parameter/URL Discovery
+> ### Content/Parameter/URL Discovery
 
   - [ ] Based on tech
   - [ ] COTS/PAID/OSS (danielmiessler/Source2URL)
@@ -293,26 +287,24 @@ and
 
 - #### Tools
 
+  - [ ] [https://github.com/jaeles-project/gospider](https://github.com/jaeles-project/gospider)
+  - [ ] [https://github.com/projectdiscovery/katana](https://github.com/projectdiscovery/katana)
+  - [ ] [https://github.com/s0md3v/Arjun](https://github.com/s0md3v/Arjun) ``` $ arjun -u url ```
+  - [ ] hakrawler [https://github.com/hakluke/hakrawler](https://github.com/hakluke/hakrawler)
+  - [ ] gau [https://github.com/lc/gau](https://github.com/lc/gau)
+  - [ ] [https://github.com/tomnomnom/unfurl](https://github.com/tomnomnom/unfurl)
+  - [ ] [https://github.com/GerbenJavado/LinkFinder](https://github.com/GerbenJavado/LinkFinder)
   - [ ] turbo intruder
   - [ ] Gobuster
   - [ ] feroxbuster
   - [ ] ParamSpider
-  - [ ] gf
   - [ ] Parht
   - [ ] kxss
-  - [ ] gxss
-  - [ ] SecretFinder
-  - [ ] gau [https://github.com/lc/gau](https://github.com/lc/gau)
-  - [ ] hakrawler
   - [ ] wfuzz
-  - [ ] ffuf
+  - [ ] ffuf ```ffuf -u http://api.com.br/FUZZ -w /usr/share/seclists/Discovery/Web-Content/api/api-endpoints.txt -p 20 -t 1 -c -v -o ffuf_output```
   - [ ] dirsearch
-  - [ ] arjun  ``` $ arjun -u url ``` [https://github.com/s0md3v/Arjun](https://github.com/s0md3v/Arjun)
-  - [ ] [https://github.com/tomnomnom/unfurl](https://github.com/tomnomnom/unfurl)
-  - [ ] [https://github.com/projectdiscovery/katana](https://github.com/projectdiscovery/katana)
-  - [ ] [https://github.com/GerbenJavado/LinkFinder](https://github.com/GerbenJavado/LinkFinder)
-  - [ ] waybackurls [https://github.com/tomnomnom/waybackurls](https://github.com/tomnomnom/waybackurls)
-  - [ ] [https://github.com/jaeles-project/gospider](https://github.com/jaeles-project/gospider)
+
+
 
 - [ ] ``` $ cat domains.txt | httpx -status | gau ```
 
@@ -358,6 +350,7 @@ and
 
 - #### [ ] javascript analysis
   - [ ] find some things hardcoded
+  - [ ] SecretFinder [https://github.com/m4ll0k/SecretFinder](https://github.com/m4ll0k/SecretFinder)
   - [ ] linkfinder
   - [ ] xnLinkFinder (@xnl-h4ck3r)
   - [ ] GAP burp ext
@@ -369,8 +362,16 @@ and
 
 - #### [ ] parameter analysis
   - [ ] priorize parameters that were vulnerable to certain vulns classes...
-  - [ ] gf of tomnomnom
+  - [ ] gf tomnomnom [https://github.com/tomnomnom/gf](https://github.com/tomnomnom/gf)
   - [ ] jhaddix/sus_params
+  - [ ] Dlafox [https://github.com/hahwul/dalfox](https://github.com/hahwul/dalfox)
+  - [ ] Gxss [https://github.com/KathanP19/Gxss](https://github.com/KathanP19/Gxss)
+  - [ ] Airixss [https://github.com/ferreiraklet/airixss](https://github.com/ferreiraklet/airixss)
+  - ```cat url_with_params | uro | gf xss```
+  - ```cat url_with_params | uro | gf xss | httpx -t 1 -rlm 4 | qsreplace '"><svg onload=confirm(1)' | airixss -c 1 -p "confirm(1)"```
+  - ```cat url_with_params | httpx -t 1 -rlm 4 | Gxss -c 1 -p GELEIA -v -o gxss_out```
+  - ```cat wayback_output | Gxss -c 100 -p GELEIA | dalfox pipe --skip-bav --silence```
+  
 
 
 {% include figure.liquid loading="eager" path="assets/img/hotareasmap.png" width="500" height="500" class="img-fluid rounded z-depth-1" zoomable=true %}
