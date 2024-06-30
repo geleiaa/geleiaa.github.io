@@ -25,6 +25,10 @@ notes of [@jhaddix](https://twitter.com/Jhaddix) lives
   
   {% include figure.liquid loading="eager" path="assets/img/infodata.png" width="500" height="500" class="img-fluid rounded z-depth-1" zoomable=true %}
 
+  - [ ] search engines
+
+  {% include figure.liquid loading="eager" path="assets/img/infodata.png" width="500" height="500" class="img-fluid rounded z-depth-1" zoomable=true %}
+
 
 - #### Encontre o ASN (se houver) de cada empresa, isso nos dará os intervalos de IP pertencentes a cada empresa
   - [ ] [http://bgp.he.net](http://bgp.he.net)
