@@ -224,13 +224,13 @@ Nmap scan do AD server e enumeração de usarios com kerbrute
 {% include figure.liquid loading="eager" path="assets/img/kerbrute.png" width="700" height="700" class="img-fluid rounded z-depth-1" zoomable=true %}
 
 
-#### Resumindo, um atacante obteve acesso a uma rede interna atravez de um web-server comprometido, tendo a possibilidade de alcançar hosts que deveriam ser acessiveis pelo pessoal autorizado naquela rede. 
+#### Resumindo, o atacante obteve acesso a uma rede interna atravez de um web-server comprometido, tendo a possibilidade de alcançar hosts que deveriam ser acessiveis apenas pelas pessoas autorizadas naquela rede. 
 
 
 {% include figure.liquid loading="eager" path="assets/img/net-pivot-3.png" width="900" height="900" class="img-fluid rounded z-depth-1" zoomable=true %}
 
 
-#### Essa foi uma simples demonstração de como é pivotar entre redes comprometidas com facilidade tornando possével realizar movimentação lateral entre os hosts, escalar privilégios e mais...
+#### Essa foi uma simples demonstração de como é pivotar entre redes comprometidas com facilidade tornando possível realizar movimentação lateral entre os hosts, escalar privilégios e mais...
 
 
 
@@ -248,14 +248,19 @@ Nmap scan do AD server e enumeração de usarios com kerbrute
 "Userland network stack" 
 refere-se a uma pilha de rede (network stack) que é implementada no espaço de usuário (userland) em vez de ser implementada no espaço do kernel do sistema operacional.
 
-Normalmente, em um s.o tradicional, a pilha de rede (responsável por gerenciar o tráfego de rede, como TCP/IP) é parte do núcleo (kernel)... enviar e receber pacotes de dados, acontecem no contexto do kernel, que tem privilégios elevados para manipular diretamente o hardware e o tráfego de rede.
+Normalmente, em um s.o tradicional, a pilha de rede (responsável por gerenciar o tráfego de rede, como TCP/IP) é parte do núcleo (kernel)...
+enviar e receber pacotes de dados, acontecem no contexto do kernel, que tem privilégios elevados para manipular diretamente o hardware e o tráfego de rede.
 
-"userland network stack" coloca a pilha de rede no espaço de usuário, ou seja, em uma camada mais alta do sistema, fora do núcleo. Isso significa que o processamento das comunicações de rede não é realizado diretamente no kernel, mas em um programa que é executado em modo de usuário.
+"userland network stack" coloca a pilha de rede no espaço de usuário, ou seja, em uma camada mais alta do sistema, fora do núcleo.
+Isso significa que o processamento das comunicações de rede não é realizado diretamente no kernel, mas em um programa que é executado em modo de usuário.
 
 
 "TUN interface"
-TUN (Network TUNnel) é uma interface de rede virtual que opera na camada de rede (camada 3 do modelo OSI). Ela é usada para enviar e receber pacotes de rede em forma de pacotes IP. O TUN é geralmente usado para criar VPNs (Virtual Private Networks) e outros tipos de redes virtuais.
-A interface TUN cria uma conexão de rede virtual que o sistema operacional pode tratar como se fosse uma interface de rede real (como uma interface de rede física), mas em um contexto de espaço de usuário.
+TUN (Network TUNnel) é uma interface de rede virtual que opera na camada de rede (camada 3 do modelo OSI).
+Ela é usada para enviar e receber pacotes de rede em forma de pacotes IP.
+O TUN é geralmente usado para criar VPNs (Virtual Private Networks) e outros tipos de redes virtuais.
+A interface TUN cria uma conexão de rede virtual que o sistema operacional pode tratar como se fosse uma
+interface de rede real (como uma interface de rede física), mas em um contexto de espaço de usuário.
 
 ```
 
