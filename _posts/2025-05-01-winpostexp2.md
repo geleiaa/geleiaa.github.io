@@ -7,6 +7,9 @@ categories: windows cheatsheet
 tags: windows cheatsheet
 ---
 
+* content
+{:toc}
+
 
 ## Domain Recon for lateral moviment
 > ___
@@ -16,15 +19,15 @@ Depois de conseguir acesso a uma maquina que faz parte de um dominio AD, o recon
 A ideia aqui é mostrar algumas formas de reconhecimento que são baseadas em protocolos nativos usados pelo AD e pelo s.o windows, com o objetivo de tirar vantagem de ferramentas usadas nativamente e ser mais furtivo numa atepa conhecida pelos redteamers como Situational Awareness...
 
 - Account Discovery: Domain Account
-- https://attack.mitre.org/techniques/T1087/002/
+- [https://attack.mitre.org/techniques/T1087/002/](https://attack.mitre.org/techniques/T1087/002/)
 
-- AD https://book.hacktricks.wiki/en/windows-hardening/active-directory-methodology/index.html
-  - https://github.com/S1ckB0y1337/Active-Directory-Exploitation-Cheat-Sheet
-  - https://swisskyrepo.github.io/InternalAllTheThings/active-directory/ad-adds-enumerate/
+- AD [https://book.hacktricks.wiki/en/windows-hardening/active-directory-methodology/index.html](https://book.hacktricks.wiki/en/windows-hardening/active-directory-methodology/index.html)
+  - [https://github.com/S1ckB0y1337/Active-Directory-Exploitation-Cheat-Sheet](https://github.com/S1ckB0y1337/Active-Directory-Exploitation-Cheat-Sheet)
+  - [https://swisskyrepo.github.io/InternalAllTheThings/active-directory/ad-adds-enumerate/](https://swisskyrepo.github.io/InternalAllTheThings/active-directory/ad-adds-enumerate/)
 
 #### opsec tips
 
-- https://github.com/RistBS/Awesome-RedTeam-Cheatsheet/blob/master/Miscs/OPSEC%20Guide.md
+- [https://github.com/RistBS/Awesome-RedTeam-Cheatsheet/blob/master/Miscs/OPSEC%20Guide.md](https://github.com/RistBS/Awesome-RedTeam-Cheatsheet/blob/master/Miscs/OPSEC%20Guide.md)
 
 - do ldap queries more specific that not consume high processing to execute.
 
@@ -38,10 +41,10 @@ A ideia aqui é mostrar algumas formas de reconhecimento que são baseadas em pr
 
 What powerview does is basically instantiate the DirectorySearcher object and use LDAP filters to query specific objects (more details below in the raw ldap query examples)
 
-- https://gist.github.com/HarmJ0y/184f9822b195c52dd50c379ed3117993
-- https://05t3.github.io/posts/PowerView-Walkthrough/
-- https://book.hacktricks.wiki/en/windows-hardening/basic-powershell-for-pentesters/powerview.html
-- https://swisskyrepo.github.io/InternalAllTheThings/active-directory/ad-adds-enumerate/#using-powerview
+- [https://gist.github.com/HarmJ0y/184f9822b195c52dd50c379ed3117993](https://gist.github.com/HarmJ0y/184f9822b195c52dd50c379ed3117993)
+- [https://05t3.github.io/posts/PowerView-Walkthrough/](https://05t3.github.io/posts/PowerView-Walkthrough/)
+- [https://book.hacktricks.wiki/en/windows-hardening/basic-powershell-for-pentesters/powerview.html](https://book.hacktricks.wiki/en/windows-hardening/basic-powershell-for-pentesters/powerview.html)
+- [https://swisskyrepo.github.io/InternalAllTheThings/active-directory/ad-adds-enumerate/#using-powerview](https://swisskyrepo.github.io/InternalAllTheThings/active-directory/ad-adds-enumerate/#using-powerview)
 
 
 - load pv in memory
@@ -193,7 +196,7 @@ $searcher.FindAll()
 ```
 
 - short example query using "[adsisearcher]". Is the same result of others examples.
-- https://www.secuinfra.com/en/techtalk/adsisearcher-get-the-object-of-interest-search-for-specific-users-and-computers/
+- [https://www.secuinfra.com/en/techtalk/adsisearcher-get-the-object-of-interest-search-for-specific-users-and-computers/](https://www.secuinfra.com/en/techtalk/adsisearcher-get-the-object-of-interest-search-for-specific-users-and-computers/)
 
 ```powershell
 
@@ -327,8 +330,8 @@ $search.FindAll()
 ## Offensive WMI (Get-WmiObject)
 > ___
 
-- https://0xinfection.github.io/posts/wmi-recon-enum/
-- https://0xinfection.github.io/posts/wmi-ad-enum/
+- [https://0xinfection.github.io/posts/wmi-recon-enum/](https://0xinfection.github.io/posts/wmi-recon-enum/)
+- [https://0xinfection.github.io/posts/wmi-ad-enum/](https://0xinfection.github.io/posts/wmi-ad-enum/)
 
 
 WMI is simply another way of exposing and interacting with internal Windows components.
@@ -422,26 +425,26 @@ Vale também resaltar que existem varias outras ferrementas nativas que podem se
 
 De todas as refs essas aqui são as mais relevantes porque detalham como as queries ldap podem ser detectadas e da exemplos reais de como a threat actors fazem:
 
-- https://cravaterouge.com/articles/ldapad-logging/
-- https://unit42.paloaltonetworks.com/lightweight-directory-access-protocol-based-attacks/
-- https://www.cisa.gov/sites/default/files/2024-02/aa24-046a-threat-actor-leverages-compromised%20account-of%20former-employee.pdf
+- [https://cravaterouge.com/articles/ldapad-logging/](https://cravaterouge.com/articles/ldapad-logging/)
+- [https://unit42.paloaltonetworks.com/lightweight-directory-access-protocol-based-attacks/](https://unit42.paloaltonetworks.com/lightweight-directory-access-protocol-based-attacks/0
+- [https://www.cisa.gov/sites/default/files/2024-02/aa24-046a-threat-actor-leverages-compromised%20account-of%20former-employee.pdf](https://www.cisa.gov/sites/default/files/2024-02/aa24-046a-threat-actor-leverages-compromised%20account-of%20former-employee.pdf)
 
 
 #### refs
 
-- https://powershellcommands.com/query-ldap-with-powershell
+- [https://powershellcommands.com/query-ldap-with-powershell](https://powershellcommands.com/query-ldap-with-powershell)
 
-- https://blog.netwrix.com/2022/08/31/discovering-service-accounts-without-using-privileges/
+- [https://blog.netwrix.com/2022/08/31/discovering-service-accounts-without-using-privileges/](https://blog.netwrix.com/2022/08/31/discovering-service-accounts-without-using-privileges/)
 
-- https://www.youtube.com/watch?v=-xF6bvbXCGE
+- [https://www.youtube.com/watch?v=-xF6bvbXCGE](https://www.youtube.com/watch?v=-xF6bvbXCGE)
 
-- https://techexpert.tips/powershell/powershell-ldap-query-active-directory/
+- [https://techexpert.tips/powershell/powershell-ldap-query-active-directory/](https://techexpert.tips/powershell/powershell-ldap-query-active-directory/)
 
-- https://gist.github.com/Erreinion/76660c012ad05ab90182
+- [https://gist.github.com/Erreinion/76660c012ad05ab90182](https://gist.github.com/Erreinion/76660c012ad05ab90182)
 
-- https://posts.specterops.io/an-introduction-to-manual-active-directory-querying-with-dsquery-and-ldapsearch-84943c13d7eb
+- [https://posts.specterops.io/an-introduction-to-manual-active-directory-querying-with-dsquery-and-ldapsearch-84943c13d7eb](https://posts.specterops.io/an-introduction-to-manual-active-directory-querying-with-dsquery-and-ldapsearch-84943c13d7eb)
 
-- https://posts.specterops.io/manual-ldap-querying-part-2-8a65099e12e3
+- [https://posts.specterops.io/manual-ldap-querying-part-2-8a65099e12e3](https://posts.specterops.io/manual-ldap-querying-part-2-8a65099e12e3)
 
 
 ## In-Memory execution 
@@ -456,51 +459,51 @@ Outras tecnicas envolvem usar um implant ja rodando para executar outras ferrame
 
 O c2 Sliver implementa essas tecnicas que podem ser usadas para pós-exploração. Elas são executadas na cli como execute-assembly, sideload, spawndll e tambem as extensões ou aliases, vou deixar referencias a baixo. 
 
-No Metasoploit você pode usar o modulo "shellcode_inject". Nesse modulo você precisa ter um sessão ativa e saber em qual processo na maquina alvo é possivel executar. Aqui tem um exemplo de como pode ser usado https://github.com/geleiaa/blog-repo/blob/main/posts/2025-05-19-AdversarialTradecraftNotes.md#process-injection
+No Metasoploit você pode usar o modulo "shellcode_inject". Nesse modulo você precisa ter um sessão ativa e saber em qual processo na maquina alvo é possivel executar. Aqui tem um exemplo de como pode ser usado [https://github.com/geleiaa/blog-repo/blob/main/posts/2025-05-19-AdversarialTradecraftNotes.md#process-injection](https://github.com/geleiaa/blog-repo/blob/main/posts/2025-05-19-AdversarialTradecraftNotes.md#process-injection)
 
 Assim como o cobaltstrike que é basicamente todos os modulos de pós-exploração são baseados em execução em memoria...
 
 
-- Sliver Extencions https://dominicbreuker.com/post/learning_sliver_c2_12_extensions/
+- Sliver Extencions [https://dominicbreuker.com/post/learning_sliver_c2_12_extensions/](https://dominicbreuker.com/post/learning_sliver_c2_12_extensions/
 
-- Sliver Execute-Assembly https://dominicbreuker.com/post/learning_sliver_c2_09_execute_assembly/
+- Sliver Execute-Assembly [https://dominicbreuker.com/post/learning_sliver_c2_09_execute_assembly/]https://dominicbreuker.com/post/learning_sliver_c2_09_execute_assembly/)
 
-- Sliver Sideload https://dominicbreuker.com/post/learning_sliver_c2_10_sideload/
+- Sliver Sideload [https://dominicbreuker.com/post/learning_sliver_c2_10_sideload/](https://dominicbreuker.com/post/learning_sliver_c2_10_sideload/)
 
-- Sliver Reflective Dll https://dominicbreuker.com/post/learning_sliver_c2_11_spawndll/
+- Sliver Reflective Dll [https://dominicbreuker.com/post/learning_sliver_c2_11_spawndll/](https://dominicbreuker.com/post/learning_sliver_c2_11_spawndll/)
 
-- MSF shellcode injec https://web.archive.org/web/20240313192232/https://iwantmore.pizza/posts/meterpreter-shellcode-inject.html
+- MSF shellcode injec [https://web.archive.org/web/20240313192232/https://iwantmore.pizza/posts/meterpreter-shellcode-inject.html](https://web.archive.org/web/20240313192232/https://iwantmore.pizza/posts/meterpreter-shellcode-inject.html)
 
-- Cobaltstrike in memory execution https://www.cobaltstrike.com/blog/in-memory-evasion
+- Cobaltstrike in memory execution [https://www.cobaltstrike.com/blog/in-memory-evasion](https://www.cobaltstrike.com/blog/in-memory-evasion)
 
 
 ## Tools for automate recon 
 > ___
 
-- Seatbelt https://github.com/GhostPack/Seatbelt (exec inmemory)
+- Seatbelt [https://github.com/GhostPack/Seatbelt](https://github.com/GhostPack/Seatbelt) (exec inmemory)
 
-- SharpUp (lpe checks) https://github.com/GhostPack/SharpUp (exec inmemory)
+- SharpUp (lpe checks) [https://github.com/GhostPack/SharpUp](https://github.com/GhostPack/SharpUp) (exec inmemory)
 
-- SharpWMI https://github.com/GhostPack/SharpWMI (exec inmemory)
+- SharpWMI [https://github.com/GhostPack/SharpWMI](https://github.com/GhostPack/SharpWMI) (exec inmemory)
 
-- SharpView (C# powerview) https://github.com/tevora-threat/SharpView (exec inmemory)
+- SharpView (C# powerview) [https://github.com/tevora-threat/SharpView](https://github.com/tevora-threat/SharpView) (exec inmemory)
 
-- ADSearch https://github.com/tomcarver16/ADSearch
+- ADSearch [https://github.com/tomcarver16/ADSearch](https://github.com/tomcarver16/ADSearch)
 
-- AdFind http://www.joeware.net/freetools/tools/adfind/
-  - https://thedfirreport.com/2020/05/08/adfind-recon/
+- AdFind [http://www.joeware.net/freetools/tools/adfind/](http://www.joeware.net/freetools/tools/adfind/)
+  - [https://thedfirreport.com/2020/05/08/adfind-recon/](https://thedfirreport.com/2020/05/08/adfind-recon/)
 
-- https://github.com/adrecon/ADRecon  
+- [https://github.com/adrecon/ADRecon](https://github.com/adrecon/ADRecon)  
 
-- https://github.com/securethelogs/RedRabbit/blob/master/RedRabbit.ps1
+- [https://github.com/securethelogs/RedRabbit/blob/master/RedRabbit.ps1](https://github.com/securethelogs/RedRabbit/blob/master/RedRabbit.ps1)
 
-- https://github.com/itm4n/PrivescCheck
+- [https://github.com/itm4n/PrivescCheck](https://github.com/itm4n/PrivescCheck)
 
-- https://github.com/xforcered/SoaPy
+- [https://github.com/xforcered/SoaPy](https://github.com/xforcered/SoaPy)
 
-- https://juggernaut-sec.com/tag/ldapsearch/ (ldapsearch examples)
-  - https://docs.ldap.com/ldap-sdk/docs/tool-usages/ldapsearch.html
-  - https://docs.redhat.com/en/documentation/red_hat_directory_server/11/html/administration_guide/examples-of-common-ldapsearches#Examples-of-common-ldapsearches
+- [https://juggernaut-sec.com/tag/ldapsearch/](https://juggernaut-sec.com/tag/ldapsearch/) (ldapsearch examples)
+  - [https://docs.ldap.com/ldap-sdk/docs/tool-usages/ldapsearch.html](https://docs.ldap.com/ldap-sdk/docs/tool-usages/ldapsearch.html)
+  - [https://docs.redhat.com/en/documentation/red_hat_directory_server/11/html/administration_guide/examples-of-common-ldapsearches#Examples-of-common-ldapsearches](https://docs.redhat.com/en/documentation/red_hat_directory_server/11/html/administration_guide/examples-of-common-ldapsearches#Examples-of-common-ldapsearches)
 
 
 - dsquery ex:

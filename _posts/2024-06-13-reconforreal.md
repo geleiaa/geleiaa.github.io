@@ -7,11 +7,14 @@ categories: web recon cheatsheet
 tags: web recon cheatsheet
 ---
 
+* content
+{:toc}
+
 notes of [@jhaddix](https://twitter.com/Jhaddix) lives
 
 [https://book.hacktricks.xyz/generic-methodologies-and-resources/external-recon-methodology](https://book.hacktricks.xyz/generic-methodologies-and-resources/external-recon-methodology)
 
-![a](https://github.com/geleiaa/geleiaa.github.io/tree/master/img/path.png)
+![a](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/path.png)
 
 > ## Assets discovery
 
@@ -24,11 +27,11 @@ notes of [@jhaddix](https://twitter.com/Jhaddix) lives
   - [ ] Intelx [https://intelx.io/tools](https://intelx.io/tools)
 
   
-![a](https://github.com/geleiaa/geleiaa.github.io/tree/master/img/infodata.png)
+![a](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/infodata.png)
 
   - [ ] search engines
 
-![a](https://github.com/geleiaa/geleiaa.github.io/tree/master/img/searchengs.png)
+![a](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/searchengs.png)
 
 
 - #### Encontre o ASN (se houver) de cada empresa, isso nos dará os intervalos de IP pertencentes a cada empresa
@@ -145,7 +148,7 @@ notes of [@jhaddix](https://twitter.com/Jhaddix) lives
 - #### [ ] Shodan passive recon
 
 
-![a](https://github.com/geleiaa/geleiaa.github.io/tree/master/img/shodanrsrc.png)
+![a](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/shodanrsrc.png)
 
 
   - passive recon [https://github.com/pirxthepilot/wtfis](https://github.com/pirxthepilot/wtfis)
@@ -279,7 +282,7 @@ Google Cloud: [http://bit.ly/2HAsZFm](http://bit.ly/2HAsZFm)
   - [ ] Based on tech
   - [ ] COTS/PAID/OSS (danielmiessler/Source2URL)
   - [ ] Custom (github.com/0xDexter0us/Scavenger)
-  - [ ] Historical (echo domain.com | gau | wordlistgen | sort -u)
+  - [ ] Historical (``` echo domain.com | gau | wordlistgen | sort -u ```)
   - [ ] Recursive (Tip: if you found a 401 dont stop, keep going and go deep)
   - [ ] Mobile APIs
   - [ ] Change Detection
@@ -328,7 +331,7 @@ Google Cloud: [http://bit.ly/2HAsZFm](http://bit.ly/2HAsZFm)
 - [ ] ``` $ echo domains | subfinder -silent | httpx -silent | katana -silent -d 10 | unfurl keys | uro ```
 
 
-![a](https://github.com/geleiaa/geleiaa.github.io/tree/master/img/contdisclists.png)
+![a](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/contdisclists.png)
 
 
 > ## [ ] Application Analysis
@@ -379,7 +382,7 @@ Google Cloud: [http://bit.ly/2HAsZFm](http://bit.ly/2HAsZFm)
   
 
 
-![a](https://github.com/geleiaa/geleiaa.github.io/tree/master/img/hotareasmap.png)
+![a](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/hotareasmap.png)
 
 
 - Adding more constantly...

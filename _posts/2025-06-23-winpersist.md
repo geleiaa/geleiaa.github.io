@@ -7,6 +7,9 @@ categories: windows persistence cheatsheet
 tags: windows persistence cheatsheet
 ---
 
+* content
+{:toc}
+
 
 ## Windows Peristence
 
@@ -15,7 +18,7 @@ tags: windows persistence cheatsheet
 >___
 
 
-#### Registry Starup Persistence
+### Registry Starup Persistence
 
 - Unprivileged
 
@@ -46,14 +49,14 @@ tags: windows persistence cheatsheet
 ```
 
 
-#### Logon Script (Registry)
+### Logon Script (Registry)
 
 Regular User / Medium Integrity Level
 
-- https://attack.mitre.org/techniques/T1037/001/
-- https://www.atomicredteam.io/atomic-red-team/atomics/T1037.001
-- https://cocomelonc.github.io/persistence/2022/12/09/malware-pers-20.html
-- https://hadess.io/the-art-of-windows-persistence/#h-logon-scripts
+- [https://attack.mitre.org/techniques/T1037/001/](https://attack.mitre.org/techniques/T1037/001/)
+- [https://www.atomicredteam.io/atomic-red-team/atomics/T1037.001](https://www.atomicredteam.io/atomic-red-team/atomics/T1037.001)
+- [https://cocomelonc.github.io/persistence/2022/12/09/malware-pers-20.html](https://cocomelonc.github.io/persistence/2022/12/09/malware-pers-20.html)
+- [https://hadess.io/the-art-of-windows-persistence/#h-logon-scripts](https://hadess.io/the-art-of-windows-persistence/#h-logon-scripts)
 
 
 - add registry key with path to implant
@@ -71,19 +74,19 @@ C:\path\to\implant
 ```
 
 
-#### Shotcut Modification
+### Shotcut Modification
 
-- https://www.hackingarticles.in/windows-persistence-shortcut-modification-t1547/
+- [https://www.hackingarticles.in/windows-persistence-shortcut-modification-t1547/](https://www.hackingarticles.in/windows-persistence-shortcut-modification-t1547/)
 
 
-#### Screensavers (Registry)
+### Screensavers (Registry)
 
 Regular User / Medium Integrity Level
 
-- https://attack.mitre.org/techniques/T1546/002/
-- https://github.com/austin-lai/Persistence-through-Windows-Screensaver-Hijacking
-- https://www.ired.team/offensive-security/persistence/t1180-screensaver-hijack
-- https://pentestlab.blog/2019/10/09/persistence-screensaver/
+- [https://attack.mitre.org/techniques/T1546/002/](https://attack.mitre.org/techniques/T1546/002/)
+- [https://github.com/austin-lai/Persistence-through-Windows-Screensaver-Hijacking](https://github.com/austin-lai/Persistence-through-Windows-Screensaver-Hijacking)
+- [https://www.ired.team/offensive-security/persistence/t1180-screensaver-hijack](https://www.ired.team/offensive-security/persistence/t1180-screensaver-hijack)
+- [https://pentestlab.blog/2019/10/09/persistence-screensaver/](https://pentestlab.blog/2019/10/09/persistence-screensaver/)
 
 
 - set implant to execute
@@ -101,22 +104,22 @@ Regular User / Medium Integrity Level
 - maybe you need set ScreemSaveActive to 1 and ScreenSaverInSecure to 0
 
 
-#### Powershell Profile
+### Powershell Profile
 
 Regular User / Medium Integrity Level
 
-- https://attack.mitre.org/techniques/T1546/013/
-- https://www.ired.team/offensive-security/persistence/powershell-profile-persistence
-- https://themayor.notion.site/Windows-PowerShell-Persistence-cd04df3ceec8465b9bd1e3bd2030cd63
-- https://www.welivesecurity.com/2019/05/29/turla-powershell-usage/
-- https://themayor.notion.site/Windows-PowerShell-Persistence-cd04df3ceec8465b9bd1e3bd2030cd63
+- [https://attack.mitre.org/techniques/T1546/013/](https://attack.mitre.org/techniques/T1546/013/)
+- [https://www.ired.team/offensive-security/persistence/powershell-profile-persistence](https://www.ired.team/offensive-security/persistence/powershell-profile-persistence)
+- [https://themayor.notion.site/Windows-PowerShell-Persistence-cd04df3ceec8465b9bd1e3bd2030cd63](https://themayor.notion.site/Windows-PowerShell-Persistence-cd04df3ceec8465b9bd1e3bd2030cd63)
+- [https://www.welivesecurity.com/2019/05/29/turla-powershell-usage/](https://www.welivesecurity.com/2019/05/29/turla-powershell-usage/)
+- [https://themayor.notion.site/Windows-PowerShell-Persistence-cd04df3ceec8465b9bd1e3bd2030cd63](https://themayor.notion.site/Windows-PowerShell-Persistence-cd04df3ceec8465b9bd1e3bd2030cd63)
 
 
 
-#### Dll Hijacking / Proxying
+### Dll Hijacking / Proxying
 
-- https://attack.mitre.org/techniques/T1574/001/
-- https://unit42.paloaltonetworks.com/dll-hijacking-techniques/
+- [https://attack.mitre.org/techniques/T1574/001/](https://attack.mitre.org/techniques/T1574/001/)
+- [https://unit42.paloaltonetworks.com/dll-hijacking-techniques/](https://unit42.paloaltonetworks.com/dll-hijacking-techniques/)
 
 1. Find good candidate for hijacking:
    - something running automaticly or triggery by something
@@ -141,32 +144,32 @@ Regular User / Medium Integrity Level
 6. The last thing is copy proxy dll to path where has NOT FOUND legit dll
 
 - missing DLLs
-- https://lsecqt.github.io/Red-Teaming-Army/malware-development/weaponizing-dll-hijacking-via-dll-proxying/
-- https://medium.com/@lsecqt/weaponizing-dll-hijacking-via-dll-proxying-3983a8249de0
-- https://pentestlab.blog/tag/dll-hijacking/
+- [https://lsecqt.github.io/Red-Teaming-Army/malware-development/weaponizing-dll-hijacking-via-dll-proxying/](https://lsecqt.github.io/Red-Teaming-Army/malware-development/weaponizing-dll-hijacking-via-dll-proxying/)
+- [https://medium.com/@lsecqt/weaponizing-dll-hijacking-via-dll-proxying-3983a8249de0](https://medium.com/@lsecqt/weaponizing-dll-hijacking-via-dll-proxying-3983a8249de0)
+- [https://pentestlab.blog/tag/dll-hijacking/](https://pentestlab.blog/tag/dll-hijacking/)
 
 - DLLs that resides on directories with write permission by low-privilege users
-- https://www.blackhillsinfosec.com/a-different-take-on-dll-hijacking/ 
+- [https://www.blackhillsinfosec.com/a-different-take-on-dll-hijacking/ ](https://www.blackhillsinfosec.com/a-different-take-on-dll-hijacking/ )
 
-- https://www.youtube.com/watch?v=3eROsG_WNpE (explorer.exe dll hijacking)
+- [https://www.youtube.com/watch?v=3eROsG_WNpE](https://www.youtube.com/watch?v=3eROsG_WNpE) (explorer.exe dll hijacking)
 
 - replacing legit dll and exporting same functions
-- https://www.ired.team/offensive-security/persistence/dll-proxying-for-persistence
-- https://web.archive.org/web/20240619201250/https://cn-sec.com/archives/2633298.html
+- [https://www.ired.team/offensive-security/persistence/dll-proxying-for-persistence](https://www.ired.team/offensive-security/persistence/dll-proxying-for-persistence)
+- [https://web.archive.org/web/20240619201250/https://cn-sec.com/archives/2633298.html](https://web.archive.org/web/20240619201250/https://cn-sec.com/archives/2633298.html)
 
 - tools
-- https://github.com/Flangvik/SharpDllProxy
-- https://github.com/sadreck/Spartacus  Spartacus DLL/COM Hijacking Toolkit 
+- [https://github.com/Flangvik/SharpDllProxy](https://github.com/Flangvik/SharpDllProxy)
+- [https://github.com/sadreck/Spartacus](https://github.com/sadreck/Spartacus)  Spartacus DLL/COM Hijacking Toolkit
 
 
-#### COM Hijacking / Proxying
+### COM Hijacking / Proxying
 
-- https://attack.mitre.org/techniques/T1546/015/
-- https://specterops.io/blog/2025/05/28/revisiting-com-hijacking/
-- https://tiparaleigo.wordpress.com/2022/04/08/5694/
-- https://cocomelonc.github.io/tutorial/2022/05/02/malware-pers-3.html
-- https://reliaquest.com/blog/threat-spotlight-hijacked-and-hidden-new-backdoor-and-persistence-technique/
-- https://cicada-8.medium.com/hijack-the-typelib-new-com-persistence-technique-32ae1d284661
+- [https://attack.mitre.org/techniques/T1546/015/](https://attack.mitre.org/techniques/T1546/015/)
+- [https://specterops.io/blog/2025/05/28/revisiting-com-hijacking/](https://specterops.io/blog/2025/05/28/revisiting-com-hijacking/)
+- [https://tiparaleigo.wordpress.com/2022/04/08/5694/](https://tiparaleigo.wordpress.com/2022/04/08/5694/)
+- [https://cocomelonc.github.io/tutorial/2022/05/02/malware-pers-3.html](https://cocomelonc.github.io/tutorial/2022/05/02/malware-pers-3.html)
+- [https://reliaquest.com/blog/threat-spotlight-hijacked-and-hidden-new-backdoor-and-persistence-technique/](https://reliaquest.com/blog/threat-spotlight-hijacked-and-hidden-new-backdoor-and-persistence-technique/)
+- [https://cicada-8.medium.com/hijack-the-typelib-new-com-persistence-technique-32ae1d284661](https://cicada-8.medium.com/hijack-the-typelib-new-com-persistence-technique-32ae1d284661)
 
 COM hijacking takes advantage of how Windows looks up and loads COM objects. Each COM class has a unique CLSID and a registry key like InProcServer32 (for DLLs) or LocalServer32 (for EXEs) that tells Windows what to load. These entries can exist in either the HKEY_LOCAL_MACHINE (HKLM) (system-wide) or HKEY_CURRENT_USER (HKCU) (user-specific) registry hives. Because of the registry search order in Windows, the HKCU hive is checked before HKLM, so if a CLSID exists in both, the one in HKCU is prioritized. Since users can write to their own HKCU hive, an attacker can create or override a CLSID entry there. If a program tries to use that COM object, Windows will load the attacker’s DLL instead of the legitimate one. So, the goal is to find a COM object that: 
 
@@ -208,9 +211,9 @@ COM hijacking takes advantage of how Windows looks up and loads COM objects. Eac
 >___
 
 
-#### Local Account Create
+### Local Account Create
 
-- https://attack.mitre.org/techniques/T1136/001/
+- [https://attack.mitre.org/techniques/T1136/001/](https://attack.mitre.org/techniques/T1136/001/)
 
 - create new account and add to administrator group
 
@@ -248,10 +251,10 @@ WMCI useraccount where name='%user%' set passwordsexpires=false
 ```
 
 
-#### AnyDesk
+### AnyDesk
 
-- https://support.anydesk.com/knowledge/command-line-interface-for-windows
-- https://support.anydesk.com/knowledge/use-cases-for-the-command-line-interface
+- [https://support.anydesk.com/knowledge/command-line-interface-for-windows](https://support.anydesk.com/knowledge/command-line-interface-for-windows)
+- [https://support.anydesk.com/knowledge/use-cases-for-the-command-line-interface](https://support.anydesk.com/knowledge/use-cases-for-the-command-line-interface)
 
 - get anydesk installer, install it, set password and get session id
 
@@ -272,9 +275,9 @@ cmd.exe /c "for /f ""delims="" %i in ('C:\ProgramData\AnyDesk\AnyDesk.exe --get-
 ```
 
 
-#### Task-Scheduler
+### Task-Scheduler
 
-- https://attack.mitre.org/techniques/T1053/005/
+- [https://attack.mitre.org/techniques/T1053/005/](https://attack.mitre.org/techniques/T1053/005/)
 
 - Are 2 types of tasks that you can set:
   - 1 - regular user with low privilegies (limited functionality)
@@ -282,9 +285,9 @@ cmd.exe /c "for /f ""delims="" %i in ('C:\ProgramData\AnyDesk\AnyDesk.exe --get-
 
 - Examples:
 
-- https://thedfirreport.com/wp-content/uploads/2023/12/19208-019.png
+- [https://thedfirreport.com/wp-content/uploads/2023/12/19208-019.png](https://thedfirreport.com/wp-content/uploads/2023/12/19208-019.png)
 
-- https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/schtasks
+- [https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/schtasks](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/schtasks)
 
 - view info of a task
 
@@ -336,18 +339,18 @@ schtasks /create /I 1 /TR C:\Users\REDACTED\AppData\Local\Notepad\UpdateEG.bat /
 
 
 
-#### Create / Modified Windows Services
+### Create / Modified Windows Services
 
-- https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/sc-create
-- https://attack.mitre.org/techniques/T1569/002/
-- https://attack.mitre.org/techniques/T1543/003/
-- https://www.ired.team/offensive-security/persistence/t1035-service-execution#execution
-- https://redcanary.com/threat-detection-report/techniques/windows-service/
-- https://pentestlab.blog/2019/10/07/persistence-new-service/
-- https://cocomelonc.github.io/tutorial/2022/05/09/malware-pers-4.html
-- https://www.sans.org/blog/red-team-tactics-hiding-windows-services/
+- [https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/sc-create](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/sc-create)
+- [https://attack.mitre.org/techniques/T1569/002/](https://attack.mitre.org/techniques/T1569/002/)
+- [https://attack.mitre.org/techniques/T1543/003/](https://attack.mitre.org/techniques/T1543/003/)
+- [https://www.ired.team/offensive-security/persistence/t1035-service-execution#execution](https://www.ired.team/offensive-security/persistence/t1035-service-execution#execution)
+- [https://redcanary.com/threat-detection-report/techniques/windows-service/](https://redcanary.com/threat-detection-report/techniques/windows-service/)
+- [https://pentestlab.blog/2019/10/07/persistence-new-service/](https://pentestlab.blog/2019/10/07/persistence-new-service/)
+- [https://cocomelonc.github.io/tutorial/2022/05/09/malware-pers-4.html](https://cocomelonc.github.io/tutorial/2022/05/09/malware-pers-4.html)
+- [https://www.sans.org/blog/red-team-tactics-hiding-windows-services/](https://www.sans.org/blog/red-team-tactics-hiding-windows-services/)
 
-- service code example https://github.com/geleiaa/low_level_things/blob/main/maldev_win/CppSamples/svcimplant.cpp
+- service code example [https://github.com/geleiaa/low_level_things/blob/main/maldev_win/CppSamples/svcimplant.cpp](https://github.com/geleiaa/low_level_things/blob/main/maldev_win/CppSamples/svcimplant.cpp)
 
 - Local Admin Privs and elevated session is needed
 
@@ -367,14 +370,14 @@ sc query <SVCNAME>
 ```
 
 - Tips for make a service seem legitimate:
-- https://grzegorztworek.medium.com/persistence-with-windows-services-1b21579f0ff3
+- [https://grzegorztworek.medium.com/persistence-with-windows-services-1b21579f0ff3](https://grzegorztworek.medium.com/persistence-with-windows-services-1b21579f0ff3)
 
 - **Service Name**: Will not name it with randomly generated name and will not suggest it is something worth digging deeper. Good name can refer to some deeply-hidden OS mechanisms, suggesting the investigator “do not touch me and just pass-by”. Something like PnP Enumerator, Transport Layer Security Helper, etc. The more misguiding Google results for such name, the better.
 
 - **Service Description**: Nothing very elaborate, just a phrase or two, somewhat aligned to what the service name says. In most cases no one will read it with an intention of understanding.
 
 - **Service binaries**: Exe is good but DLL is better and services can be run from DLLs too. One of advantages is monitoring tools focus on processes and not on libraries loaded. And from the process perspective, Blue has the well-know, Microsoft-made, whitelisted, and commonly used svchost.exe, which exists in dozens of instances on every single Windows machine.
-- https://www.ired.team/offensive-security/persistence/persisting-in-svchost.exe-with-a-service-dll-servicemain
+- [https://www.ired.team/offensive-security/persistence/persisting-in-svchost.exe-with-a-service-dll-servicemain](https://www.ired.team/offensive-security/persistence/persisting-in-svchost.exe-with-a-service-dll-servicemain)
 
 - **Service account and privileges**: Effectively most of services runs with the highest privileges you can observe in the OS. If Red wants to stay undetected, he can leave his service running such way. If Red wants to be tricky, he can also intentionally configure his service on less privileged identity such as LocalService, leaving privilege-based backdoor, to regain full power when needed. 
 
@@ -382,13 +385,13 @@ sc query <SVCNAME>
 
 
 
-#### IFEO (Image File Execution Options)
+### IFEO (Image File Execution Options)
 
-- https://attack.mitre.org/techniques/T1546/012/
-- https://securityblueteam.medium.com/utilizing-image-file-execution-options-ifeo-for-stealthy-persistence-331bc972554e
-- https://www.atomicredteam.io/atomic-red-team/atomics/T1546.012
-- https://amr-git-dot.github.io/offensive/persistence/#image-file-execution
-- https://www.darkrelay.com/post/ifeo-injection
+- [https://attack.mitre.org/techniques/T1546/012/](https://attack.mitre.org/techniques/T1546/012/)
+- [https://securityblueteam.medium.com/utilizing-image-file-execution-options-ifeo-for-stealthy-persistence-331bc972554e](https://securityblueteam.medium.com/utilizing-image-file-execution-options-ifeo-for-stealthy-persistence-331bc972554e)
+- [https://www.atomicredteam.io/atomic-red-team/atomics/T1546.012](https://www.atomicredteam.io/atomic-red-team/atomics/T1546.012)
+- [https://amr-git-dot.github.io/offensive/persistence/#image-file-execution](https://amr-git-dot.github.io/offensive/persistence/#image-file-execution)
+- [https://www.darkrelay.com/post/ifeo-injection](https://www.darkrelay.com/post/ifeo-injection)
 
 
 - Debugger value
@@ -397,15 +400,15 @@ sc query <SVCNAME>
 > reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\TARGET-BIN.EXE" /v Debugger /d "C:\path\to\implant" /reg:32 or 64
 ```
 
-#### WMI Events
+### WMI Events
 
-- https://attack.mitre.org/techniques/T1546/003/
-- https://www.ired.team/offensive-security/persistence/t1084-abusing-windows-managent-instrumentation
-- https://www.blackhat.com/docs/us-15/materials/us-15-Graeber-Abusing-Windows-Management-Instrumentation-WMI-To-Build-A-Persistent%20Asynchronous-And-Fileless-Backdoor-wp.pdf
-- https://web.archive.org/web/20201207115625/https://www.fireeye.com/content/dam/fireeye-www/global/en/current-threats/pdfs/wp-windows-management-instrumentation.pdf
-- https://pentestlab.blog/2020/01/21/persistence-wmi-event-subscription/
-- https://in.security/2019/04/03/an-intro-into-abusing-and-identifying-wmi-event-subscriptions-for-persistence/
-- https://medium.com/@ali.bahri/mofs-manipulating-wmi-events-9fc9f58af947
+- [https://attack.mitre.org/techniques/T1546/003/](https://attack.mitre.org/techniques/T1546/003/)
+- [https://www.ired.team/offensive-security/persistence/t1084-abusing-windows-managent-instrumentation](https://www.ired.team/offensive-security/persistence/t1084-abusing-windows-managent-instrumentation)
+- [https://www.blackhat.com/docs/us-15/materials/us-15-Graeber-Abusing-Windows-Management-Instrumentation-WMI-To-Build-A-Persistent%20](https://www.blackhat.com/docs/us-15/materials/us-15-Graeber-Abusing-Windows-Management-Instrumentation-WMI-To-Build-A-Persistent%20Asynchronous-And-Fileless-Backdoor-wp.pdf)
+- [https://web.archive.org/web/20201207115625/https://www.fireeye.com/content/dam/fireeye-www/global/en/current-threats/pdfs/wp-windows-management-instrumentation.pdf](https://web.archive.org/web/20201207115625/https://www.fireeye.com/content/dam/fireeye-www/global/en/current-threats/pdfs/wp-windows-management-instrumentation.pdf)
+- [https://pentestlab.blog/2020/01/21/persistence-wmi-event-subscription/](https://pentestlab.blog/2020/01/21/persistence-wmi-event-subscription/)
+- [https://in.security/2019/04/03/an-intro-into-abusing-and-identifying-wmi-event-subscriptions-for-persistence/](https://in.security/2019/04/03/an-intro-into-abusing-and-identifying-wmi-event-subscriptions-for-persistence/)
+- [https://medium.com/@ali.bahri/mofs-manipulating-wmi-events-9fc9f58af947](https://medium.com/@ali.bahri/mofs-manipulating-wmi-events-9fc9f58af947)
 
 - Administrator level privileges are required to use this technique
 
@@ -508,11 +511,11 @@ wmic.exe /NAMESPACE:"\\root\subscription\" PATH __FilterToConsumerBinding WHERE 
 
 
 
-#### Winlogon
+### Winlogon
 
-- https://attack.mitre.org/techniques/T1547/004/
-- https://www.ired.team/offensive-security/persistence/windows-logon-helper
-- https://www.hackingarticles.in/windows-persistence-using-winlogon/
+- [https://attack.mitre.org/techniques/T1547/004/](https://attack.mitre.org/techniques/T1547/004/)
+- [https://www.ired.team/offensive-security/persistence/windows-logon-helper](https://www.ired.team/offensive-security/persistence/windows-logon-helper)
+- [https://www.hackingarticles.in/windows-persistence-using-winlogon/](https://www.hackingarticles.in/windows-persistence-using-winlogon/)
 
 - common registry values
 
@@ -535,11 +538,11 @@ HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon\shell
 ```
 
 
-#### Time Providers
+### Time Providers
 
-- https://attack.mitre.org/techniques/T1547/003/
-- https://pentestlab.blog/2019/10/22/persistence-time-providers/
-- https://hacklido.com/blog/841-gaining-persistence-on-windows-with-time-providers
+- [https://attack.mitre.org/techniques/T1547/003/](https://attack.mitre.org/techniques/T1547/003/)
+- [https://pentestlab.blog/2019/10/22/persistence-time-providers/](https://pentestlab.blog/2019/10/22/persistence-time-providers/)
+- [https://hacklido.com/blog/841-gaining-persistence-on-windows-with-time-providers](https://hacklido.com/blog/841-gaining-persistence-on-windows-with-time-providers)
 
 
 - service that control time provs = W32Time
@@ -565,14 +568,14 @@ HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\W32Time\TimeProviders\
 ```
 
 
-#### LSA as persistence - Authentication Package and SSP
+### LSA as persistence - Authentication Package and SSP
 
-- https://attack.mitre.org/techniques/T1547/002/
-- https://attack.mitre.org/techniques/T1547/005/
-- https://hadess.io/the-art-of-windows-persistence/#h-lsa
-- https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1547.002/src/package/package.c (custom mal dll example)
-- https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1547.005/T1547.005.md
-- https://pentestlab.blog/2019/10/21/persistence-security-support-provider/ (mimilib.dll example)
+- [https://attack.mitre.org/techniques/T1547/002/](https://attack.mitre.org/techniques/T1547/002/)
+- [https://attack.mitre.org/techniques/T1547/005/](https://attack.mitre.org/techniques/T1547/005/)
+- [https://hadess.io/the-art-of-windows-persistence/#h-lsa](https://hadess.io/the-art-of-windows-persistence/#h-lsa)
+- [https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1547.002/src/package/package.c](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1547.002/src/package/package.c) (custom mal dll example)
+- [https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1547.005/T1547.005.md](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1547.005/T1547.005.md)
+- [https://pentestlab.blog/2019/10/21/persistence-security-support-provider/](https://pentestlab.blog/2019/10/21/persistence-security-support-provider/) (mimilib.dll example)
 
 - Dll as auth package
 
@@ -611,9 +614,9 @@ HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\W32Time\TimeProviders\
 
 
 
-#### Tools for automate
+### Tools for automate
 
-- SharPersist https://github.com/mandiant/SharPersist (prefer execute im-memory)
+- SharPersist [https://github.com/mandiant/SharPersist](https://github.com/mandiant/SharPersist) (prefer execute im-memory)
   - ```> execute-assembly C:\path\to\binary -t schtask -c "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe" -a "-nop -w hidden -enc <B64-payload>" -n "Updater" -m add -o hourly```
   - ```> execute-assembly C:\path\to\binary -t startupfolder -c "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe" -a "-nop -w hidden -enc <B64-payload>" -f "UserEnvSetup" -m add```
 

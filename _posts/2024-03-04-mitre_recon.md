@@ -7,6 +7,9 @@ categories: recon cheatsheet
 tags: recon cheatsheet
 ---
 
+* content
+{:toc}
+
 ## Mitre Recon
 
 Essa lista é uma ordem lógica das fases de recon baseado no mitre-pre [https://attack.mitre.org/matrices/enterprise/pre/](https://attack.mitre.org/matrices/enterprise/pre/). A ordem das fases é como eu vejo a melhor forma de se organizar e executar um recon em uma empresa/organização, isso vai desde osint basico até o início da enumeração de rede/ativos.

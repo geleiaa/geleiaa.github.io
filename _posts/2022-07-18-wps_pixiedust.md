@@ -19,7 +19,7 @@ duas chaves AES de 128 bits randômicas (E-S1 e E-S2) para encriptação da
 primeira e da segunda metade do PIN, respectivamente. Se as duas chaves
 forem descobertas, é possível recuperar o número PIN com um ataque offline
 em menos de um segundo, em vez de “chutar” o número PIN no roteador, processo que pode levar 
-de 8 a 12 horas (mais informações sobre o brute-force offline aqui http://archive.hack.lu/2014/Hacklu2014_offline_bruteforce_attack_on_wps.pdf)
+de 8 a 12 horas (mais informações sobre o brute-force offline aqui [http://archive.hack.lu/2014/Hacklu2014_offline_bruteforce_attack_on_wps.pdf]http://archive.hack.lu/2014/Hacklu2014_offline_bruteforce_attack_on_wps.pdf)
 
 
 ## Parte pratica
@@ -55,7 +55,7 @@ $ sudo airodump-ng --wps <interface>
 sudo reaver -i <interface> -c <channel> -b <mac do ap> -vv -K 1
 (precisa da flag -vv)
 ```
-##### O resultado pode variar um pouco porque depende muito do roteador que está sendo atacado. Essa falha é relativa ao firmware do roteador, não sendo todos os roteadores vulneráveis. Você pode ver alguns exemplos de saida aqui ==> (https://forums.kali.org/showthread.php?25123-Reaver-modfication-for-Pixie-Dust-Attack) ou pesquisar por conta própria e ver vários resultados diferentes que as pessoas conseguem por ai ... mas saída que deu certo pra mim foi semelhante a essa:
+##### O resultado pode variar um pouco porque depende muito do roteador que está sendo atacado. Essa falha é relativa ao firmware do roteador, não sendo todos os roteadores vulneráveis. Você pode ver alguns exemplos de saida aqui ==> ([https://forums.kali.org/showthread.php?25123-Reaver-modfication-for-Pixie-Dust-Attack]https://forums.kali.org/showthread.php?25123-Reaver-modfication-for-Pixie-Dust-Attack) ou pesquisar por conta própria e ver vários resultados diferentes que as pessoas conseguem por ai ... mas saída que deu certo pra mim foi semelhante a essa:
 
 ```
 $ sudo reaver -i <interface> -c <channel> -b 01:D0:30:4A:49:45 -vv -K 1
@@ -160,9 +160,9 @@ auth_alg=OPEN
 ```
 
 referencia:
-- https://novatec.com.br/livros/pentest-redes-sem-fio/
-- https://en.wikipedia.org/wiki/Wi-Fi_Protected_Access#WPS_PIN_recovery
-- https://en.wikipedia.org/wiki/Wi-Fi_Protected_Setup
-- https://github.com/wiire-a/pixiewps
-- https://github.com/t6x/reaver-wps-fork-t6x
-- https://forums.kali.org/showthread.php?24286-WPS-Pixie-Dust-Attack-(Offline-WPS-Attack)
+- [https://novatec.com.br/livros/pentest-redes-sem-fio/]https://novatec.com.br/livros/pentest-redes-sem-fio/
+- [https://en.wikipedia.org/wiki/Wi-Fi_Protected_Access#WPS_PIN_recovery]https://en.wikipedia.org/wiki/Wi-Fi_Protected_Access#WPS_PIN_recovery
+- [https://en.wikipedia.org/wiki/Wi-Fi_Protected_Setup]https://en.wikipedia.org/wiki/Wi-Fi_Protected_Setup
+- [https://github.com/wiire-a/pixiewps]https://github.com/wiire-a/pixiewps
+- [https://github.com/t6x/reaver-wps-fork-t6x]https://github.com/t6x/reaver-wps-fork-t6x
+- [https://forums.kali.org/showthread.php?24286-WPS-Pixie-Dust-Attack-(Offline-WPS-Attack)]https://forums.kali.org/showthread.php?24286-WPS-Pixie-Dust-Attack-(Offline-WPS-Attack)

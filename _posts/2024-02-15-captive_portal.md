@@ -7,14 +7,16 @@ categories: wifi phishing
 tags: wifi phishing
 ---
 
+* content
+{:toc}
 
 ## Ataque de Captive Portal com eaphammer
 
-#### O ataque de captive-portal consiste em subir uma rede wifi falsa imitando a rede alvo (aka rogue ap, fake ap ou evil twin), para que os clientes da rede alvo se conectem na rede falsa, caiam em uma pagina phishing e assim passem a psk da rede legítima.
+<strong>O ataque de captive-portal consiste em subir uma rede wifi falsa imitando a rede alvo (aka rogue ap, fake ap ou evil twin), para que os clientes da rede alvo se conectem na rede falsa, caiam em uma pagina phishing e assim passem a psk da rede legítima.</strong>
 
 Para esse ataque você vai precisar de:
 
-1 - a tool eaphammer (https://github.com/s0lst1c3/eaphammer)
+1 - a tool eaphammer ([https://github.com/s0lst1c3/eaphammer]https://github.com/s0lst1c3/eaphammer)
 
 2 - um adaptador wireless que suporte o modo AP(access point)
 
@@ -27,7 +29,7 @@ Para esse ataque você vai precisar de:
 
 A pagina de phishing pode depender do cenario em que o ataque será feito, então fica a critério do atacante escolher a mais adequada.
 
-Para esse tutorial vou usar uma pagina que é usada em outra tool de wifi hacking, a tool wifiphishing. Essa pagina simula uma atualização de firmware do roteador: https://wifiphisher.org/ps/firmware-upaginarade/
+Para esse tutorial vou usar uma pagina que é usada em outra tool de wifi hacking, a tool wifiphishing. Essa pagina simula uma atualização de firmware do roteador: [https://wifiphisher.org/ps/firmware-upaginarade/]https://wifiphisher.org/ps/firmware-upaginarade/
 
 
 ### 2 - clonando a pagina de phishing para a tool (adicionando template):
@@ -49,7 +51,7 @@ Faça download dos arquivos da pagina, mova-os para /var/www/html, starte o serv
 
 
 
-![a](https://github.com/geleiaa/geleiaa.github.io/tree/master/img/pihishrouterpg.png)
+![a](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/pihishrouterpg.png)
 
 
 
@@ -97,12 +99,12 @@ Você tera que editar a pagina antes de subir a rede falsa. Fazendo isso o backe
 Depois de alterações o pagina deve ficar assim:
 
 
-![a](https://github.com/geleiaa/geleiaa.github.io/tree/master/img/inputhtmledit.png)
+![a](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/inputhtmledit.png)
 
 
 
 
-![a](https://github.com/geleiaa/geleiaa.github.io/tree/master/img/pgrendered.png)
+![a](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/pgrendered.png)
 
 
 
@@ -114,7 +116,7 @@ Nota: Você pode fazer o mesmo processo de editar o html para mudar outras parte
 Agora é a hora que vamos precisar usar as duas placas de rede (adaptadores) ou só uma, se a placa suportar os modos necessarios. Para essa demonstração usei placas com os seguintes chipsets: RTL8812AU (suporta modo AP) e RTL8192EU (suporta modo Mon)
 
 
-#### Starte o fake ap com a placa que suporta AP:
+<strong>Starte o fake ap com a placa que suporta AP:</strong>
 
 ```
 ./eaphammer --captive-portal --portal-template seu-template --essid "TARGET-ESSID" --channel TARGET-CHANNEL --bssid 11:22:33:44:55:66 --interface INTERFACE-NAME
@@ -128,18 +130,18 @@ Se estiver tudo certo o fake ap vai ser iniciado como uma rede OPEN e você pode
 
 
 
-![a](https://github.com/geleiaa/geleiaa.github.io/tree/master/img/fakeapok.png)
+![a](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/fakeapok.png)
 
 
 
 exemplo de visão do alvo
 
 
-![a](https://github.com/geleiaa/geleiaa.github.io/tree/master/img/clientexample.png)
+![a](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/clientexample.png)
 
 
 
-#### Deauth na rede alvo:
+<strong>Deauth na rede alvo:</strong>
 
 Depois que o fake ap estiver up e esperando conexões você deve desautenticar os clientes da rede alvo para que eles possam se conectar no fake ap. Use o aireplay-ng pra isso:
 
@@ -150,13 +152,13 @@ aireplay-ng -0 0 -a TARGET-AP-MAC INTEFACE-NAME
 Dica: o comando acima manda deauth para o broadcast da rede alvo, ou seja, todos os clientes vão receber os pacotes de deauth. Essa é a melhor forma porque não adianta muito você desautenticar apenas um cliente e os outros continuarem conectados normalmente, e você também corre o risco de ser percebido por causa das diferença da rede legitima e a falsa.
 
 
-#### logs do fake ap:
+<strong>logs do fake ap:</strong>
 
 Quando alguém se conectar ao fake ap, os logs vão aparecer na tela do terminal junto com os logs do DNS-spoofing funcionando e redirecionando os dispositivos conectados para a pagina de phishing:
 
 
 
-![a](https://github.com/geleiaa/geleiaa.github.io/tree/master/img/clientconect.png)
+![a](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/clientconect.png)
 
 
 
@@ -167,14 +169,14 @@ exemplo de visão do alvo em smartphone
 
 
 
-![a](https://github.com/geleiaa/geleiaa.github.io/tree/master/img/phoneexample.png)
+![a](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/phoneexample.png)
 
 
 
 O client conectado verá o pagina de atualização de firmware e se a sua eng-social der certo, ele digitara a senha pensando que há uma atualização de firmware do roteador... e a psk digitada vai aparecer nos logs do fake ap:
 
 
-![a](https://github.com/geleiaa/geleiaa.github.io/tree/master/img/recvpsk.png)
+![a](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/recvpsk.png)
 
 
 
