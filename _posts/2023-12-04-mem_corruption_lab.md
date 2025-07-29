@@ -10,14 +10,14 @@ tags: rpisec bin-exp
 * content
 {:toc}
 
-- Solving lab2C "02/13 | --[ Memory Corruption Lab" ([https://github.com/RPISEC/MBE/blob/master/src/lab02/lab2C.c](https://github.com/RPISEC/MBE/blob/master/src/lab02/lab2C.c))
+- Solving lab2C 02/13 | Memory Corruption Lab" ([https://github.com/RPISEC/MBE/blob/master/src/lab02/lab2C.c](https://github.com/RPISEC/MBE/blob/master/src/lab02/lab2C.c))
 
 ### This lab is a simple buffer-overflow. The intention of this lab was to explore bof and get a shell from the lab machine and then get the flag. But here we won't have the shell part.
 
 First we go get the source code and compile following the instruction that is commented in the code:
 
 
-![compilelab2ccode](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/compilelab2ccode.png)
+![compilelab2ccode](/img/compilelab2ccode.png)
 
 
 ```
@@ -27,13 +27,13 @@ gcc -O0 -fno-stack-protector lab2C.c -o lab2C
 Running the binary we see how to use it:
 
 
-![binusage](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/binusage.png)
+![binusage](/img/binusage.png)
 
 
 Running with a string the binary shows that we are not "authenticated" and set_me is 0. It seems that the binary needs a specific string/password:
 
 
-![noauth](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/notauth.png)
+![noauth](/img/notauth.png)
 
 
 
@@ -44,7 +44,7 @@ $ objdump -dM intel lab2C | grep -A40 "<main>:"
 ```
 
 
-![jmp](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/jmp.png)
+![jmp](/img/jmp.png)
 
 
 
@@ -55,7 +55,7 @@ $ objdump -dM intel lab2C | grep -A12 "<shell>:"
 ```
 
 
-![disasshell](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/disasshell.png)
+![disasshell](/img/disasshell.png)
 
 
 
@@ -65,7 +65,7 @@ $ objdump -dM intel lab2C | grep -A12 "<shell>:"
 Looking at the disassembly with gdb + peda we can better see the execution flow of the main function:
 
 
-![gdbdisas](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/gdbdisas.png)
+![gdbdisas](/img/gdbdisas.png)
 
 
 
@@ -74,19 +74,19 @@ Running the binary in gdb without passing any input string, the flow is diverted
 * check input (**cmp DWORD PTR [rbp-0x24],0x2**)
 
 
-![withoutarg](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/withoutarg1.png)
+![withoutarg](/img/withoutarg1.png)
 
 
 * if not have input, print the usage
 
 
-![a](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/withoutarg2.png)
+![a](/img/withoutarg2.png)
 
 
 * jump to the end
 
 
-![a](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/withoutarg3.png)
+![a](/img/withoutarg3.png)
 
 
 
@@ -107,7 +107,7 @@ gdb-peda$ r GELEIA
 Now running with a input the exec flow throws us to another place. First compare if have any args, so **je** (jump equal) go to address **<main+59>**.
 
 
-![a](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/witharg1.png)
+![a](/img/witharg1.png)
 
 
 
@@ -115,7 +115,7 @@ After some steps we arrive at the **strcpy** function that we saw before. We can
 
 
 
-![a](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/witharg2.png)
+![a](/img/witharg2.png)
 
 
 
@@ -125,14 +125,14 @@ After comparing if **DWORD PTR [rbp-0x4]** address is equal to "0xdeadbeef" the 
 * jump to end
 
 
-![a](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/witharg3.png)
+![a](/img/witharg3.png)
 
 
 
 * print message and finishes
 
 
-![a](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/witharg4.png)
+![a](/img/witharg4.png)
 
 
 
@@ -162,12 +162,12 @@ Getting close to the part that checks the input we can see the alphabet buffer b
 * first buffer go to **RAX** after go to **RDX**
 
 
-![a](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/buffmove1.png)
+![a](/img/buffmove1.png)
 
 
 
 
-![a](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/buffmove2.png)
+![a](/img/buffmove2.png)
 
 
 
@@ -176,14 +176,14 @@ Passing in **strcpy** function the buffer is stored and after this the address *
 
 
 
-![a](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/compare1.png)
+![a](/img/compare1.png)
 
 
 
 So if we look at what's at that address, we see the bytes that overwrote the memory after the leak:
 
 
-![a](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/compare2.png)
+![a](/img/compare2.png)
 
 
 
@@ -230,18 +230,18 @@ Then let's move on to the part that matters:
 * we can see the exploration buffer being moved.
 
 
-![a](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/exp1.png)
+![a](/img/exp1.png)
 
 
 
 * Coming to the comparison, we see that the buffer overwrote the variable where it is stored and went to the memory of the next instruction.
 
 
-![a](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/exp2.png)
+![a](/img/exp2.png)
 
 
 
-![a](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/exp3.png)
+![a](/img/exp3.png)
 
 
 
@@ -249,12 +249,12 @@ Then let's move on to the part that matters:
 * Since we have the memory overwritten, then the execution flow goes to the shell function as expected.
 
 
-![a](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/exp4.png)
+![a](/img/exp4.png)
 
 
 
 
-![a](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/exp5.png)
+![a](/img/exp5.png)
 
 
 
@@ -262,7 +262,7 @@ Then let's move on to the part that matters:
 * Now we get to the shell function and see what's in it.
 
 
-![a](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/exp6.png)
+![a](/img/exp6.png)
 
 
 

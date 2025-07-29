@@ -19,7 +19,7 @@ tags: network windows redteam
 
 <p>Um atacante explora alguma vulnerabilidade em uma aplicação web e consegue acesso ao shell do server em que a aplicação está rodando. Depois de conseguir o acesso e fazer um recon local, o atacante percebe que esse server está numa borda entre a internet e uma rede interna onde estão outros servidores e maquinas que o server comprometido pode acessar. Essa rede do server é uma rede DMZ (demilitarized zone) que é uma sub-net (geralmente atras de um firewall) isolada do resto da rede interna e também a unica parte da rede que é acessivel pela internet.</p>
 
-![a](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/net-pivot-2.png)
+![a](/img/net-pivot-2.png)
 
 
 <strong>Sabendo disso, o atacante tem algumas opções, duas delas são:</strong>
@@ -39,7 +39,7 @@ Para não prolongar muito vou pular logo pra parte em que ja temos acesso ao she
 Podemos ver que a interface de rede eth0 do server tem um ip de faixa reservado para ser usado em LAN ([https://whatismyipaddress.com/reserved-ip-address-blocks](https://whatismyipaddress.com/reserved-ip-address-blocks)). E esse ip está em uma sub-net /24, ou seja, ja sabemos quantas possibilidades de ip temos, então podemos fazer um simples scan para achar mais hosts ativos naquela sub-net.
 
 
-![a](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/ipa.png)
+![a](/img/ipa.png)
 
 
 Fazendo um scan no range local /24 vemos que existem mais dois hosts ativos. Pelas portas abertas nesses hosts é possivel afirmar que são hosts windows, um deles é um Active Directory.
@@ -117,7 +117,7 @@ Seguindo o quickstart na documentação é bem simples.
 Em releases [https://github.com/nicocha30/ligolo-ng/releases](https://github.com/nicocha30/ligolo-ng/releases) faça download dos binarios client e server, depois descompacte:
 
 
-![a](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/clienteserver.png)
+![a](/img/clienteserver.png)
 
 
 Com os binarios descompactados temos o ```client``` que precisa esta na maquina alvo e o ```proxy``` que é o server. 
@@ -132,7 +132,7 @@ Com os binarios descompactados temos o ```client``` que precisa esta na maquina 
 
 O server precisa ser iniciado com sudo porque o ligolo criar interface de rede e rotas na maquina.
 
-![a](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/startserver.png)
+![a](/img/startserver.png)
 
 
 > <strong>2 - inicie o client na maquina comprometida</strong>
@@ -142,19 +142,19 @@ O server precisa ser iniciado com sudo porque o ligolo criar interface de rede e
 Usando o ip da maquina do atacante e a porta padrão que o server usa ao inicar, junto com o fingerprint do server pra usar o certificado TLS self-signed que o server gera.
 
 
-![a](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/startclient.png)
+![a](/img/startclient.png)
 
 
 Depois de rodar o comando você recebe a confirmação de que o client se conectou ao server logo abaixo. E no terminal com o server rodando, também vemos que uma sessão foi iniciada a partir do client.
 
 
-![a](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/clientconnected.png)
+![a](/img/clientconnected.png)
 
 
 Selecione a sessão com o comando ```session``` e o número da sessão
 
 
-![a](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/selectsession.png)
+![a](/img/selectsession.png)
 
 
 > <strong> 3 - Com o client e o server conectados, crie a tun interface que vai ser usado pelo ligolo</strong>
@@ -164,13 +164,13 @@ Selecione a sessão com o comando ```session``` e o número da sessão
 (você pode usar o nome que quiser. nessa demo eu usei o nome "pivot")
 
 
-![a](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/createinterface.png)
+![a](/img/createinterface.png)
 
 
 Confirme que a interface foi criada na maquina listando todas elas:
 
 
-![a](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/ifconfig.png)
+![a](/img/ifconfig.png)
 
 
 > <strong> 4 - Starte o tunel usando a interface tun criada</strong>
@@ -178,7 +178,7 @@ Confirme que a interface foi criada na maquina listando todas elas:
 ``` tunnel_start --tun <INTERFACE_NAME> ```
 
 
-![a](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/tunnelstart.png)
+![a](/img/tunnelstart.png)
 
 
 > <strong> 5 - Set a rota da rede alvo</strong>
@@ -186,7 +186,7 @@ Confirme que a interface foi criada na maquina listando todas elas:
 ``` interface_route_add --name <INTERFACE_NAME> --route 172.16.20.0/24 ```
 
 
-![a](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/createroute.png)
+![a](/img/createroute.png)
 
 
 O range de ip que você vai usar depende de qual range a rede alvo usa, se é 192.168.x.x ou 10.10.x.x. Na maquina dessa demo o range é 172.16.20.0/24, como vimos la em cima. 
@@ -197,39 +197,39 @@ Confirme que a rota e o ip está correto no próprio shell do server ligolo
 ``` route_list ```
 
 
-![a](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/routelist.png)
+![a](/img/routelist.png)
 
 
 ``` ifconfig ```
 
 
-![a](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/ligoloifconfig.png)
+![a](/img/ligoloifconfig.png)
 
 
 > <strong> 6 - Depois de setar o rota e verificar se está tudo certo, ja temos acesso a rede interna do maquina comprometida</strong>
 
 Pingando os ips da rede interna do alvo
 
-![a](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/ping1.png)
+![a](/img/ping1.png)
 
 
-![a](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/ping2.png)
+![a](/img/ping2.png)
 
 
 Podemos alcançar os hosts da rede alvo a partir da maquina local do atacante
 
 Nmap scan do AD server e enumeração de usarios com kerbrute
 
-![a](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/nmapscan.png)
+![a](/img/nmapscan.png)
 
 
-![a](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/kerbrute.png)
+![a](/img/kerbrute.png)
 
 
 <p>Resumindo, o atacante obteve acesso a uma rede interna atravez de um web-server comprometido, tendo a possibilidade de alcançar hosts que deveriam ser acessiveis apenas pelas pessoas autorizadas naquela rede. </p>
 
 
-![a](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/net-pivot-3.png)
+![a](/img/net-pivot-3.png)
 
 
 <p>Essa foi uma simples demonstração de como é pivotar entre redes comprometidas com facilidade tornando possível realizar movimentação lateral entre os hosts, escalar privilégios e mais...</p>

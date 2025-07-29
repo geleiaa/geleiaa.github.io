@@ -16,7 +16,7 @@ tags: wifi phishing
 
 Para esse ataque você vai precisar de:
 
-1 - a tool eaphammer ([https://github.com/s0lst1c3/eaphammer]https://github.com/s0lst1c3/eaphammer)
+1 - a tool eaphammer ([https://github.com/s0lst1c3/eaphammer](https://github.com/s0lst1c3/eaphammer))
 
 2 - um adaptador wireless que suporte o modo AP(access point)
 
@@ -29,7 +29,7 @@ Para esse ataque você vai precisar de:
 
 A pagina de phishing pode depender do cenario em que o ataque será feito, então fica a critério do atacante escolher a mais adequada.
 
-Para esse tutorial vou usar uma pagina que é usada em outra tool de wifi hacking, a tool wifiphishing. Essa pagina simula uma atualização de firmware do roteador: [https://wifiphisher.org/ps/firmware-upaginarade/]https://wifiphisher.org/ps/firmware-upaginarade/
+Para esse tutorial vou usar uma pagina que é usada em outra tool de wifi hacking, a tool wifiphishing. Essa pagina simula uma atualização de firmware do roteador: [https://wifiphisher.org/ps/firmware-upaginarade/](https://wifiphisher.org/ps/firmware-upaginarade/)
 
 
 ### 2 - clonando a pagina de phishing para a tool (adicionando template):
@@ -51,7 +51,7 @@ Faça download dos arquivos da pagina, mova-os para /var/www/html, starte o serv
 
 
 
-![a](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/pihishrouterpg.png)
+![a](/img/pihishrouterpg.png)
 
 
 
@@ -99,12 +99,12 @@ Você tera que editar a pagina antes de subir a rede falsa. Fazendo isso o backe
 Depois de alterações o pagina deve ficar assim:
 
 
-![a](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/inputhtmledit.png)
+![a](/img/inputhtmledit.png)
 
 
 
 
-![a](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/pgrendered.png)
+![a](/img/pgrendered.png)
 
 
 
@@ -130,14 +130,14 @@ Se estiver tudo certo o fake ap vai ser iniciado como uma rede OPEN e você pode
 
 
 
-![a](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/fakeapok.png)
+![a](/img/fakeapok.png)
 
 
 
 exemplo de visão do alvo
 
 
-![a](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/clientexample.png)
+![a](/img/clientexample.png)
 
 
 
@@ -158,7 +158,7 @@ Quando alguém se conectar ao fake ap, os logs vão aparecer na tela do terminal
 
 
 
-![a](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/clientconect.png)
+![a](/img/clientconect.png)
 
 
 
@@ -169,14 +169,14 @@ exemplo de visão do alvo em smartphone
 
 
 
-![a](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/phoneexample.png)
+![a](/img/phoneexample.png)
 
 
 
 O client conectado verá o pagina de atualização de firmware e se a sua eng-social der certo, ele digitara a senha pensando que há uma atualização de firmware do roteador... e a psk digitada vai aparecer nos logs do fake ap:
 
 
-![a](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/recvpsk.png)
+![a](/img/recvpsk.png)
 
 
 

@@ -14,7 +14,7 @@ notes of [@jhaddix](https://twitter.com/Jhaddix) lives
 
 [https://book.hacktricks.xyz/generic-methodologies-and-resources/external-recon-methodology](https://book.hacktricks.xyz/generic-methodologies-and-resources/external-recon-methodology)
 
-![a](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/path.png)
+![a](/img/path.png)
 
 > ## Assets discovery
 
@@ -27,11 +27,11 @@ notes of [@jhaddix](https://twitter.com/Jhaddix) lives
   - [ ] Intelx [https://intelx.io/tools](https://intelx.io/tools)
 
   
-![a](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/infodata.png)
+![a](/img/infodata.png)
 
   - [ ] search engines
 
-![a](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/searchengs.png)
+![a](/img/searchengs.png)
 
 
 - #### Encontre o ASN (se houver) de cada empresa, isso nos dará os intervalos de IP pertencentes a cada empresa
@@ -148,7 +148,7 @@ notes of [@jhaddix](https://twitter.com/Jhaddix) lives
 - #### [ ] Shodan passive recon
 
 
-![a](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/shodanrsrc.png)
+![a](/img/shodanrsrc.png)
 
 
   - passive recon [https://github.com/pirxthepilot/wtfis](https://github.com/pirxthepilot/wtfis)
@@ -331,7 +331,7 @@ Google Cloud: [http://bit.ly/2HAsZFm](http://bit.ly/2HAsZFm)
 - [ ] ``` $ echo domains | subfinder -silent | httpx -silent | katana -silent -d 10 | unfurl keys | uro ```
 
 
-![a](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/contdisclists.png)
+![a](/img/contdisclists.png)
 
 
 > ## [ ] Application Analysis
@@ -382,7 +382,7 @@ Google Cloud: [http://bit.ly/2HAsZFm](http://bit.ly/2HAsZFm)
   
 
 
-![a](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/hotareasmap.png)
+![a](/img/hotareasmap.png)
 
 
 - Adding more constantly...

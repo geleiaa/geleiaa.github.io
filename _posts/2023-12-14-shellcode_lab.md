@@ -25,7 +25,7 @@ gcc -z execstack -fno-stack-protector lab3C.c -o lab3C
 Running the binary we see that it asks for a username. And when I try to enter any username, I get "incorrect username":
 
 
-![a](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/runbin.png)
+![a](/img/runbin.png)
 
 
 
@@ -36,7 +36,7 @@ $ strings lab3C
 ```
 
 
-![a](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/binstrings.png)
+![a](/img/binstrings.png)
 
 
 
@@ -46,14 +46,14 @@ We see that the binary also asks for a password and probably this password and t
 We can also see a preview of the functions that binary uses:
 
 
-![a](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/binstrings2.png)
+![a](/img/binstrings2.png)
 
 
 
 Testing the username and password I get a slightly strange result...
 
 
-![a](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/testuserpass.png)
+![a](/img/testuserpass.png)
 
 
 
@@ -132,7 +132,7 @@ And just before calling the function **verify_user_name** we can see that the us
 Looking at the disassembly of functions, we don't see much that is useful:
 
 
-![a](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/disasfuncs.png)
+![a](/img/disasfuncs.png)
 
 
 
@@ -144,7 +144,7 @@ We see that the functions probably take the input and do a comparison using the 
 Following with what we already know, we first have to test whether any variable can be overflowed. Putting breakpoints in the verification functions right after the input goes to the binary and put a pattern on the inputs for see how it is handled.
 
 
-![a](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/breakfuncs.png
+![a](/img/breakfuncs.png
 
 
 
@@ -157,14 +157,14 @@ AAAAAAAABBBBBBBBCCCCCCCCDDDDDDDDEEEEEEEEFFFFFFFFGGGGGGGGHHHHHHHHIIIIIIIIJJJJJJJJ
 After a few steps in **verify_user_name** we stop at the **strcmp** function call and see the comparison with the string "rpisec". And we can also notice that one of **strcmp** arguments is "6", which would be the number of bytes that the function will validate.
 
 
-![a](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/verfname1.png)
+![a](/img/verfname1.png)
 
 
 
 So the first 6 bytes of the input have to be "rpisec". This can be confirmed because after we go through **strncmp** the flow jumps to a comparison and then print "incorrect username".
 
 
-![a](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/incorrname.png)
+![a](/img/incorrname.png)
 
 
 
@@ -177,28 +177,28 @@ So if we put the string "rpisec" before the pattern we see that **strncpm** only
 
 
 
-![a](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/passverifname.png)
+![a](/img/passverifname.png)
 
 
 
 After passing the username verification we arrive at the **verify_user_pass** function. And we can see the password verification being done:
 
 
-![a](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/verifpass1.png)
+![a](/img/verifpass1.png)
 
 
 
 As expected, after passing **strncmp** the flow jumps to a comparison and then to the end, but... 
 
 
-![a](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/incorrpass.png)
+![a](/img/incorrpass.png)
 
 
 
 I noticed that no return address was overwritten, neither from **verify_user_name** or **verify_user_pass**. Until we reached the return address of the main function, which got stuck because it was overwritten by our alphabet patter.
 
 
-![a](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/retmain.png)
+![a](/img/retmain.png)
 
 
 
@@ -230,14 +230,14 @@ With this we can know that the username variable will not be stored in the stack
 If we look at the disassembly of the main function we see that the address of the username variable is referenced before being passed to the **fgets** function and then to the **verify_user_name** function.
 
 
-![a](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/usrnmvar1.png)
+![a](/img/usrnmvar1.png)
 
 
 
 And checking the variable's memory we see the string "rpisec".
 
 
-![a](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/usrnmvar2.png)
+![a](/img/usrnmvar2.png)
 
 
 
@@ -278,7 +278,7 @@ After running the python code it sends the buffer to an "exp" file. And the expl
 
 
 
-![a](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/expfile.png)
+![a](/img/expfile.png)
 
 
 
@@ -292,21 +292,21 @@ rpisec + shellcode + pattern + addr of shellcode
 After running we can see that the shellcode has been stored along with the rpisec string.
 
 
-![a](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/shellcode1.png)
+![a](/img/shellcode1.png)
 
 
 
 Arriving at the ret main we see that the return address was successfully overwritten.
 
 
-![a](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/shellcode2.png)
+![a](/img/shellcode2.png)
 
 
 
 Then we see that the shellcode address has been reached and the shellcode instructions are being executed successfully.
 
 
-![a](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/shellcode3.png)
+![a](/img/shellcode3.png)
 
 
 
@@ -324,7 +324,7 @@ $ sudo sysctl kernel.randomize_va_space=0
 Running the binary along with the exploit... we have the shell
 
 
-![a](https://github.com/geleiaa/geleiaa.github.io/blob/master/img/pwned.png)
+![a](/img/pwned.png)
 
 
 
