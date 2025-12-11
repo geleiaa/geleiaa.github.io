@@ -11,7 +11,10 @@ tags: network windows redteam
 {:toc}
 
 
-## Network Pivoting
+
+
+
+# Network Pivoting
 
 <strong>Network Pivoting é uma técnica de pós-exploração usada para acessar a rede de maquinas comprometidas...</strong>
 

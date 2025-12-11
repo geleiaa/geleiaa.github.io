@@ -11,7 +11,10 @@ tags: windows persistence redteam
 {:toc}
 
 
-## Persistencia com ServiceDll atravez do svchost.exe
+
+
+
+# Persistencia com ServiceDll atravez do svchost.exe
 >___________________________________________________
 
 Baseado totalmente no artigo: [https://www.ired.team/offensive-security/persistence/persisting-in-svchost.exe-with-a-service-dll-servicemain](https://www.ired.team/offensive-security/persistence/persisting-in-svchost.exe-with-a-service-dll-servicemain)

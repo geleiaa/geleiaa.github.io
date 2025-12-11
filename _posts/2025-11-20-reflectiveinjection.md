@@ -12,7 +12,7 @@ tags: malware windows
 
 
 
-# REflective DLL Injection
+# Reflective DLL Injection
 
 - "*Reflective DLL injection is a technique that allows an attacker to inject a DLL's into a victim process from memory rather than disk.*"
 
@@ -21,8 +21,9 @@ Reflective DLL Injection é uma tecnica que permite carregar uma dll na memória
 
 O código da poc é um pouco grande então vou dividir em algumas partes para que o entendimento seja melhor. Cada parte do código é uma curva de aprendizado principalmente se você não está familiarizado com o Formato PE. Sendo assim, cada parte do código pode ser usado para aprendizado individual sobre a parte especifica do parse de binario. Vou deixar referencias em cada umas delas.
 
-1. Obter os bytes da DLL e armazenar em memória
-2. Alocar memeória
+#### Steps para reflective injection
+1. Obter os bytes da DLL
+2. Alocar memória 
 3. Copiar PE headers e sections
 4. Image Base Relocations
 5. Resolvendo Import Address Table
@@ -34,7 +35,7 @@ O Delivery da dll pode ser feito de varias formas, a mais comum seria servir por
 
 Na poc o delivery é um client http em c, primeiro cria um socket para se conectar ao server depois manda um GET e faz parse do tamanho da response. Para finalizar um buffer é criado para guardar a dll temporariamente. Com a dll em memória, os bytes são passados para a função ```reflective_loader```.
 
-- [https://github.com/trustedsec/TCS_InjectionTechniques/blob/main/techniques/injectionTechniques/reflectiveDLL/poc/reflective_dll.c])https://github.com/trustedsec/TCS_InjectionTechniques/blob/main/techniques/injectionTechniques/reflectiveDLL/poc/reflective_dll.c)
+- [https://github.com/trustedsec/TCS_InjectionTechniques/blob/main/techniques/injectionTechniques/reflectiveDLL/poc/reflective_dll.c](https://github.com/trustedsec/TCS_InjectionTechniques/blob/main/techniques/injectionTechniques/reflectiveDLL/poc/reflective_dll.c)
 - [https://trustedsec.com/blog/loading-dlls-reflections](https://trustedsec.com/blog/loading-dlls-reflections)
 
 
@@ -274,14 +275,14 @@ Para a demo fazer algo simples apenas pra ilustrar como funciona. Sem bypass de 
 A dll também é simples, um MsgBox que é melhor pra ver o resultado. 
 
 
-1. Compile a poc 
+1 - Compile a poc 
 
 - https://github.com/trustedsec/TCS_InjectionTechniques/blob/main/techniques/injectionTechniques/reflectiveDLL/poc/build.sh
 
 ```└─$ x86_64-w64-mingw32-gcc reflective_dll.c -w -masm=intel -fpermissive -static -lntdll -lpsapi -lws2_32 -Wl,--subsystem,console -o reflect.exe```
 
 
-2. Start em um http server para servir a dll
+2 - Start em um http server para servir a dll
 
 ```
 └─$ sudo python3 -m http.server 80
@@ -289,14 +290,14 @@ A dll também é simples, um MsgBox que é melhor pra ver o resultado.
 Serving HTTP on 0.0.0.0 port 80 (http://0.0.0.0:80/) ...
 ```
 
-3. Dll MsgBox no VisualStudio
+3 - Dll MsgBox no VisualStudio
 
 ```Create New Project --> Dynamic-Link Library (c++) --> ...```
 
-(dll imagem)
+![dllimagem](/img/dllimagem.png)
 
 
-4. Ajuste a url para get na dll
+4 - Ajuste a url para get na dll
 
 ```c
 int main()
@@ -313,6 +314,6 @@ int main()
 }
 ```
 
-5. running poc
+5 - running poc
 
 ![demo1](/img/demo1.png)

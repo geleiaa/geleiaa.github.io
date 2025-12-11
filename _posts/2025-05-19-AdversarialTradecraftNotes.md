@@ -11,6 +11,11 @@ tags: redteam book cheatsheet
 {:toc}
 
 
+
+
+
+# Adversarial Tradecraft
+
 - Offensive Key-points do livro [https://www.amazon.com.br/Adversarial-Tradecraft-Cybersecurity-real-time-computer/dp/1801076200](https://www.amazon.com.br/Adversarial-Tradecraft-Cybersecurity-real-time-computer/dp/1801076200)
 
 A ideia aqui é, depois de ler o livro, eu vi muitos pontos importantes que valem a pena serem passados a diante de forma direta e resumida para que o futuro leitor possa ter conhecimento disso e se aprofundar no assunto caso desejar. 

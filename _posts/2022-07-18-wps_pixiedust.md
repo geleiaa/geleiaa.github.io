@@ -7,8 +7,14 @@ categories: wifi
 tag: wifi
 ---
 
+* content
+{:toc}
 
-## pegando psk com pixie-dust attack 
+
+
+
+
+# pegando psk com pixie-dust attack 
 
 
 O pixie dust attack consiste em realizar a quebra do WPS de maneira offline.O método offline 

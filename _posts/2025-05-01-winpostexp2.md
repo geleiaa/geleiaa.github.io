@@ -11,7 +11,10 @@ tags: windows cheatsheet
 {:toc}
 
 
-## Domain Recon for lateral moviment
+
+
+
+# Domain Recon for lateral moviment
 > ___
 
 Depois de conseguir acesso a uma maquina que faz parte de um dominio AD, o reconhecimento de um (ou mais) dominio(s) AD é essencial para identificar outras contas de usuário, serviços, grupos e suas permissões (GPOs, ACLs, ACEs, etc), para assim encontrar formas de movimentar lateralmente e elevar privilégios no dominio AD.

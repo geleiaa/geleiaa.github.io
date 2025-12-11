@@ -11,7 +11,10 @@ tags: windows cheatsheet
 {:toc}
 
 
-## Windows Desktop/Workstation Host Post-Exp
+
+
+
+# Windows Desktop/Workstation Host Post-Exp
 > ___
 
 Post-Exp locamente, no contexto de estar sob controle de uma maquina (com shell ou logado com creds). Depois do acesso você precisa fazer recon localmente e seguir com a exploração para escalar privilégio.

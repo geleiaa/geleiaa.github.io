@@ -11,7 +11,10 @@ tags: windows persistence cheatsheet
 {:toc}
 
 
-## Windows Peristence
+
+
+
+# Windows Peristence
 
 
 ## Low Privilege Level

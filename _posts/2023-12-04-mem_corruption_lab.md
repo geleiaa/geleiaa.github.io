@@ -10,6 +10,10 @@ tags: rpisec bin-exp
 * content
 {:toc}
 
+
+
+
+
 - Solving lab2C 02/13 | Memory Corruption Lab" ([https://github.com/RPISEC/MBE/blob/master/src/lab02/lab2C.c](https://github.com/RPISEC/MBE/blob/master/src/lab02/lab2C.c))
 
 ### This lab is a simple buffer-overflow. The intention of this lab was to explore bof and get a shell from the lab machine and then get the flag. But here we won't have the shell part.
