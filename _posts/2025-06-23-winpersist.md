@@ -413,6 +413,8 @@ sc query <SVCNAME>
 - [https://in.security/2019/04/03/an-intro-into-abusing-and-identifying-wmi-event-subscriptions-for-persistence/](https://in.security/2019/04/03/an-intro-into-abusing-and-identifying-wmi-event-subscriptions-for-persistence/)
 - [https://medium.com/@ali.bahri/mofs-manipulating-wmi-events-9fc9f58af947](https://medium.com/@ali.bahri/mofs-manipulating-wmi-events-9fc9f58af947)
 
+Can be used to detect the creation, modification, or deletion of any WMI object instance. These events fire immediately. No polling period required. These events won’t be missed
+
 - Administrator level privileges are required to use this technique
 
 - query event filters (cmd and powershell)
@@ -441,7 +443,7 @@ sc query <SVCNAME>
 1. create new event sudscription (conditions that the system will listen for). In this case target binary is the trigger to start event.
 
 ```
-> wmic /NAMESPACE:"\\root\subscription" PATH __EventFilter CREATE Name="FILTER-NAME", EventNameSpace="root\cimv2", QueryLanguage="WQL", Query="Select * From __InstanceCreationEvent Within 15 Where (TargetInstace Isa 'Win32_Process' And TargetInstance.Name = 'TARGET-BIN.EXE')"
+> wmic /NAMESPACE:"\\root\subscription" PATH __EventFilter CREATE Name="FILTER-NAME", EventNameSpace="root\cimv2", QueryLanguage="WQL", Query="Select * From __InstanceCreationEvent Within 15 Where (TargetInstance Isa 'Win32_Process' And TargetInstance.Name = 'TARGET-BIN.EXE')"
 ```
 
 2. define consumer (consumers can carry out actions when event filters are triggered). here is to run implant.
@@ -472,9 +474,9 @@ $FilterToConsumerBinding = Set-WmiInstance -Namespace root/subscription -Class _
 - every 15 seconds check for a process with name "calc.exe" starts to trigger event
 
 ```
-Query: SELECT * FROM Win32_ProcessStartTrace WHERE ProcessName= 'calc.exe'
+SELECT * FROM Win32_ProcessStartTrace WHERE ProcessName= 'calc.exe'
 
-Query: select * From __InstaceCreationEvent Within 15 Where (TargetInstace Isa 'Win32_Process' And TargetInstance.Name = 'calc.exe')
+SELECT * FROM __InstanceCreationEvent Within 15 Where (TargetInstance Isa 'Win32_Process' And TargetInstance.Name = 'calc.exe')
 ```
 
 - execute every Monday, Tuesday, Thursday, Friday, and Saturday at 11:33 am local time
@@ -486,19 +488,19 @@ SELECT * FROM __InstanceModificationEvent WITHIN 60 WHERE TargetInstance ISA 'Wi
 - every 60 seconds check if system is up at 5 minutes
 
 ```
-Query: SELECT * FROM __InstanceModificationEvent WITHIN 60 WHERE TargetInstance ISA 'Win32_PerfFormatteData_PerfOS_System' AND TargetInstance.SystemUpTime >= 240 AND TargetInstance.SystemUpTime < 325
+SELECT * FROM __InstanceModificationEvent WITHIN 60 WHERE TargetInstance ISA 'Win32_PerfFormatteData_PerfOS_System' AND TargetInstance.SystemUpTime >= 240 AND TargetInstance.SystemUpTime < 325
 ```
 
 - every 60 seconds looking for event id 257 and check if this event includes string "BOB"
 
 ```
-Query: SELECT * FROM __InstanceCreationEvent WITHIN 60 WHERE TargetInstance ISA 'Win32_NTLogEvent' AND Targetinstance.EventCode = '4625' And Targetinstance.Message Like '%BOB%'
+SELECT * FROM __InstanceCreationEvent WITHIN 60 WHERE TargetInstance ISA 'Win32_NTLogEvent' AND Targetinstance.EventCode = '4625' And Targetinstance.Message Like '%BOB%'
 ```
 
 - every 10 seconds check for any service modification
 
 ```
-Query: SELECT * FROM __InstanceModificationEvent WITHIN 10 WHERE TargetInstance ISA 'Win32_Service'"
+SELECT * FROM __InstanceModificationEvent WITHIN 10 WHERE TargetInstance ISA 'Win32_Service'"
 ```
 
 

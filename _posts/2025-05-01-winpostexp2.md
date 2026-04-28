@@ -110,9 +110,12 @@ PS X:\> Get-NetUser | select name,serviceprincipalname | Format-Table -Wrap -Aut
 ```
 
 - Domain trust
+- [http://www.harmj0y.net/blog/redteaming/a-guide-to-attacking-domain-trusts/](http://www.harmj0y.net/blog/redteaming/a-guide-to-attacking-domain-trusts/)
 
 ```
 > Get-DomainTrust
+
+> Get-ForestTrust
 ```
 
 - Identify AS-REP vulnerable account
@@ -157,6 +160,22 @@ PS X:\> Get-NetUser | select name,serviceprincipalname | Format-Table -Wrap -Aut
 
 - list machines within an OU
 > Get-DomainComputer | ? { $_.DistinguishedName -match "OU=Tier 1" } | select DnsHostName
+
+- to find what machines an "interesting" GPO applies to:
+> Get-DomainGPO WorkstationGPO | %{Get-DomainOU -GPLink $_.Name} | % {Get-DomainComputer -SearchBase $_.distinguishedname -Properties dnshostname}
+> Get-DomainGPO ServerGPO | %{Get-DomainOU -GPLink $_.Name} | % {Get-DomainComputer -SearchBase $_.distinguishedname -Properties dnshostname}
+```
+
+- GPO misconfiguration enumeration
+
+```ps
+Get-DomainObjectAcl -Domain 'covertius.local' -LDAPFilter '(objectCategory=groupPolicyContainer)' -ResolveGUIDs | ? {
+    ($_.SecurityIdentifier -match '^S-1-5-.*-[1-9]\d{3,}$') -and `
+    ($_.ActiveDirectoryRights -match 'WriteProperty|GenericAll|GenericWrite|WriteDacl|WriteOwner')
+} | % {
+    $PrincipalDN = Convert-ADName $_.SecurityIdentifier -OutputType DN
+    New-Object PSObject -Property @{'ObjectDN'=$_.ObjectDN ; 'PrincipalSID'=$_.SecurityIdentifier; 'PrincipalDN'=$PrincipalDN }
+} | fl
 ```
 
 ```
