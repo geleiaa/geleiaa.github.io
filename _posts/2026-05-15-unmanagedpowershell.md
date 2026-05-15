@@ -1,6 +1,6 @@
 ---
 layout: post
-title: powershell witouth powershell.exe
+title: powershell without powershell.exe
 date: 2026-05-15
 description: Unmanaged Powershell
 categories: windows redteam
@@ -66,9 +66,9 @@ Essa não é a unica ferramenta que executa a tecnica, também temos o conjunto 
 
 
 
-- https://github.com/PowerShellEmpire/PowerTools/tree/master/PowerPick
-- https://web.archive.org/20160327101330/http://www.sixdub.net/?p=367
-- https://itm4n.github.io/reinventing-powershell/
+- [https://github.com/PowerShellEmpire/PowerTools/tree/master/PowerPick](https://github.com/PowerShellEmpire/PowerTools/tree/master/PowerPick)
+- [https://web.archive.org/20160327101330/http://www.sixdub.net/?p=367](https://web.archive.org/20160327101330/http://www.sixdub.net/?p=367)
+- [https://itm4n.github.io/reinventing-powershell/](https://itm4n.github.io/reinventing-powershell/)
 
 
 # Unmanaged Powershell Code
@@ -156,9 +156,9 @@ Um deles é o ```ICLRMetaHost``` usado para especificar a versão do CLR runtime
 
 Se o runtime puder ser carregado então chama ```ICLRRuntimeInfo()``` com o metodo ```GetInterface()``` para fazer isso e retorna  a runtime interface (CorRuntimeHost).
 
-- https://learn.microsoft.com/en-us/dotnet/framework/unmanaged-api/hosting/clrcreateinstance-function
-- https://learn.microsoft.com/en-us/dotnet/framework/unmanaged-api/hosting/iclrmetahost-getruntime-method
-- https://learn.microsoft.com/en-us/dotnet/framework/unmanaged-api/hosting/iclrruntimeinfo-getinterface-method
+- [https://learn.microsoft.com/en-us/dotnet/framework/unmanaged-api/hosting/clrcreateinstance-function](https://learn.microsoft.com/en-us/dotnet/framework/unmanaged-api/hosting/clrcreateinstance-function)
+- [https://learn.microsoft.com/en-us/dotnet/framework/unmanaged-api/hosting/iclrmetahost-getruntime-method](https://learn.microsoft.com/en-us/dotnet/framework/unmanaged-api/hosting/iclrmetahost-getruntime-method)
+- [https://learn.microsoft.com/en-us/dotnet/framework/unmanaged-api/hosting/iclrruntimeinfo-getinterface-method](https://learn.microsoft.com/en-us/dotnet/framework/unmanaged-api/hosting/iclrruntimeinfo-getinterface-method)
 
 
 
@@ -227,8 +227,8 @@ Seguindo o restante da main, com a interface CorRuntimeHost criada temos acesso 
 
 ```GetDefaultDomain``` faz referencia ao AppDomain a ser carregado, depois chama ```QueryInterface``` para obter uma interface para o AppDomain.
 
-- https://learn.microsoft.com/en-us/dotnet/framework/unmanaged-api/hosting/icorruntimehost-getdefaultdomain-method
-- https://learn.microsoft.com/en-us/dotnet/api/system._appdomain?view=netframework-4.8.1
+- [https://learn.microsoft.com/en-us/dotnet/framework/unmanaged-api/hosting/icorruntimehost-getdefaultdomain-method](https://learn.microsoft.com/en-us/dotnet/framework/unmanaged-api/hosting/icorruntimehost-getdefaultdomain-method)
+- [https://learn.microsoft.com/en-us/dotnet/api/system._appdomain?view=netframework-4.8.1](https://learn.microsoft.com/en-us/dotnet/api/system._appdomain?view=netframework-4.8.1)
 
 
 ```cpp
@@ -251,7 +251,7 @@ Com a interface do AppDomain podemos de fato carrega-lo em memória.
 
 ```spDefaultAppDomain->Load_3``` pega um array com os ```byte-code``` do custom ps runner e carrega em memória e também pega a ```Type``` interface do assembly carregado para usar depois.
 
-- https://learn.microsoft.com/en-us/dotnet/api/system._appdomain.gettype?view=netframework-4.8.1#system-appdomain-gettype
+- [https://learn.microsoft.com/en-us/dotnet/api/system._appdomain.gettype?view=netframework-4.8.1#system-appdomain-gettype](https://learn.microsoft.com/en-us/dotnet/api/system._appdomain.gettype?view=netframework-4.8.1#system-appdomain-gettype)
 
 
 ```cpp
@@ -287,8 +287,8 @@ Com a interface do AppDomain podemos de fato carrega-lo em memória.
 Por ultimo, a função ```InvokeMethod``` que não faz parte da main é tipo um wrapper para o metodo ```InvokeMember_3``` da interface ```Type``` que chama ```InvokePS``` do assembly psrunner que executa de fato os comandos powershell. 
 
 
-- https://learn.microsoft.com/en-us/dotnet/api/system.type.invokemember?view=netframework-4.8.1#system-type-invokemember(system-string-system-reflection-bindingflags-system-reflection-binder-system-object-system-object()-system-reflection-parametermodifier()-system-globalization-cultureinfo-system-string())
-- https://learn.microsoft.com/en-us/dotnet/api/system.type?view=netframework-4.8.1
+- [https://learn.microsoft.com/en-us/dotnet/api/system.type?view=netframework-4.8.1](https://learn.microsoft.com/en-us/dotnet/api/system.type?view=netframework-4.8.)
+
 
 
 ```cpp
