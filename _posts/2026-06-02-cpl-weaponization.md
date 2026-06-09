@@ -65,9 +65,9 @@ BOOL APIENTRY DllMain( HMODULE hModule,
 }
 ```
 
-Então, ja que o .cpl é uma dll e pode ser executado facilmente (e de forma maliciosa), eles são usados na maioria das vezes como delivery de malware/dropper via phishing fazendo com a o alvo execute e dê inicio a infecção.
+Então, ja que o .cpl é uma dll e pode ser executado facilmente (e de forma maliciosa), eles são usados na maioria das vezes como delivery de malware/dropper via phishing fazendo com que o alvo execute e dê inicio a infecção.
 
-Pensando nisso existem varias formas para de conseguir code-execution a partir dessa tecnica. Em alguns reports podemos ver o .cpl ser entregue incorporado a um RTF/Word, ou em um zip com arquivos nomeados como Fatura.cpl. Também vemos sendo usado em multi-stage malware e em persistencia.
+Pensando nisso existem varias formas de conseguir code-execution a partir dessa tecnica. Em alguns reports podemos ver o .cpl ser entregue incorporado a um RTF/Word, ou em um zip com arquivos nomeados como Fatura.cpl. Também vemos sendo usado em multi-stage malware e em persistencia.
 
 
 - [https://web.archive.org/web/20170830201313/https://www.trendmicro.de/cloud-content/us/pdfs/security-intelligence/white-papers/wp-cpl-malware.pdf](https://web.archive.org/web/20170830201313/https://www.trendmicro.de/cloud-content/us/pdfs/security-intelligence/white-papers/wp-cpl-malware.pdf)
@@ -88,7 +88,7 @@ Mesmo com alguns exemplos claros "in the wild" essa tecnica ainda é pouco utili
 
 Para essa demonstração pensei em fazer um .cpl que seja um dropper/loader que executa um shellcode na memoria de outro processo. O código final que usei foi baseado nos 3 repositórios abaixo. A ideia era algo que daria bypass pelo menos no defender para os testes serem mais realistas, então decidi basear totalmente na poc HellsGate mas com algumas modificações.
 
-Como c2 usei a Havoc, ja que os payloads do metasploit seriam pegos muito facil e os payloads do sliver são muito grandes.
+Como c2 usei o Havoc, ja que os payloads do metasploit seriam pegos muito facil e os payloads do sliver são muito grandes.
 
 - [https://github.com/am0nsec/HellsGate](https://github.com/am0nsec/HellsGate)
 - [https://github.com/CognisysGroup/HadesLdr](https://github.com/CognisysGroup/HadesLdr)
@@ -99,7 +99,7 @@ Como c2 usei a Havoc, ja que os payloads do metasploit seriam pegos muito facil 
 
 ## Project build + usage
 
-Abra o projeto no Visual Studio, faça as configs necessarias de setar ip, porta, fazer xor nas strings, etc. e depois build. Os scripts para xor e api hashing do repositório [https://github.com/CognisysGroup/HadesLdr](https://github.com/CognisysGroup/HadesLdr) caso queria modificar algo pode se basear la. O código que usei só tem o minimo pra ser funcional nada a mais.
+Abra o projeto no Visual Studio, faça as configs necessarias de setar ip, porta, fazer xor nas strings, etc. e depois build. Os scripts para xor e api hashing estão no repositório [https://github.com/CognisysGroup/HadesLdr](https://github.com/CognisysGroup/HadesLdr) caso queria modificar algo pode se basear la. O código que usei só tem o minimo pra ser funcional nada a mais.
 
 Depois de compilado vá ate o diretório do projeto e renomeie a .dll para .cpl e para executar é double-click.
 
