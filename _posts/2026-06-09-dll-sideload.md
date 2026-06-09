@@ -1,7 +1,7 @@
 ---
 layout: post
 title: dll sideload
-date: 2026-06-02
+date: 2026-06-09
 description: dll sideload
 categories: windows redteam malware
 tags: windows redteam malware
