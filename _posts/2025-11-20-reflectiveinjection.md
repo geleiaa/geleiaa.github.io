@@ -17,7 +17,7 @@ tags: malware windows
 - "*Reflective DLL injection is a technique that allows an attacker to inject a DLL's into a victim process from memory rather than disk.*"
 
 
-Reflective DLL Injection é uma tecnica que permite carregar uma dll na memória de um processo sem precisar escrever a dll em disco. A ideia é não deixar rastros na hora de executar algum implant no alvo. Essa tecnica funciona literalmente da mesma forma que o loader do windows quando carrega uma dll em memória, porém no código tudo é feito manualmente, a alocação de memória, parse de arquivo e etc.
+Reflective DLL Injection é uma tecnica que permite carregar uma dll na memória de um processo sem precisar escrever a dll em disco. A ideia é não deixar rastros na hora de executar algum implant no alvo. Essa tecnica funciona literalmente da mesma forma que o loader do windows quando carrega uma dll em memória. Aqui nesse código vamos ver como tudo é feito, a alocação de memória, parse de arquivo e etc.
 
 O código da poc é um pouco grande então vou dividir em algumas partes para que o entendimento seja melhor. Cada parte do código é uma curva de aprendizado principalmente se você não está familiarizado com o Formato PE. Sendo assim, cada parte do código pode ser usado para aprendizado individual sobre a parte especifica do parse de binario. Vou deixar referencias em cada umas delas.
 
@@ -27,9 +27,18 @@ O código da poc é um pouco grande então vou dividir em algumas partes para qu
 3. Copiar PE headers e sections
 4. Image Base Relocations
 5. Resolvendo Import Address Table
+6. Execução da Dll
 
 
 ## Armazenar a DLL em memória (sem escrever no disco)
+
+- Obs
+
+*Aqui temos dois cenarios para considerar: O primeiro é que a maioria das POCs de reflective dll injection são baseadas nesse projeto [ReflectiveDLLInjection](https://github.com/stephenfewer/ReflectiveDLLInjection) cirado por Stephen Fewer, na POC original (em algumas outras também) o código é dividido por ```Loader``` e a dll a ser injetada. O Loader contem toda a lógica responsavel pelo injeção e a dll contem o código malicioso. Então na POC original depende de uma dll a parte para ser injetada.*
+
+*O segundo cenario é que em algumas variações por ai, ao invez de ter uma dll a parte, o Loader carrega a si mesmo. O código é de uma dll que percorre sua própria imagem, carrega um cópia de si mesmo na memória e chama o próprio entrypoint (essa é a base do beacon cobalt strike por exemplo).*
+
+*Nesse artigo abordaremos o primeiro cenario se baseando no artigo da TrustedSec (link a baixo).*
 
 O Delivery da dll pode ser feito de varias formas, a mais comum seria servir por algum web server, requisitar com um client http e depois armazenar em uma variavel do powershell por exemplo. Seja qual for o delivery você precisa ter em mente que a ideia é não deixar samples na maquina alvo. Como essa parte não é o foco vou deixar em aberto.
 
@@ -41,9 +50,9 @@ Na poc o delivery é um client http em c, primeiro cria um socket para se conect
 
 ## Alocando memória para a dll
 
-Depois de ter acesso a DLL e armazenar os bytes em memória nós precisamos alocar memória com espaço e permissões (RWX) necessarias. Em variantes de código são usadas algumas funções diferentes, nesse exemplo foi usado a ```VirtualAlloc```  para deixar mais simples. 
+Depois de ter acesso a DLL e armazenar os bytes em memória nós precisamos alocar memória com espaço e permissões necessarias. Em variantes de código são usadas algumas funções diferentes, nesse exemplo foi usado a ```VirtualAlloc```  para deixar mais simples. 
 
-Para alocar a quantidade necessaria de memória precisamos saber o tamanho da DLL que será injetada. Também em algumas variantes de código são usadas funções diferentes para isso, por exemplo, na versão original da tecnica o autor usou a ```GetFileSize```, mas nesse exemplo vamos ver uma abordagem que extrai os valores ```ImageBase``` e ```SizeOfImage``` do Optional Header da DLL.
+Para alocar a quantidade necessaria de memória precisamos saber o tamanho da DLL que será injetada. Também em algumas variantes de código são usadas funções diferentes para isso, por exemplo, na versão original da tecnica o autor usou a ```GetFileSize```, mas nesse exemplo vamos ver uma abordagem que extrai os valores ```ImageBase``` e ```SizeOfImage``` do Optional Header da DLL (aqui começa o parse dos PE headers).
 
 
 ```c
@@ -169,7 +178,7 @@ Aqui acontece um loop que itera entre os ```relocation blocks```. A condição d
 
 ```
 
-Depois de separar todas as Entries elas são "filtradas" por ```type = 0``` (na doc da microsoft diz que o type 0 é skippado). Logo depois é calculado o RVA das relocations somando o endereço da tabela com os offsets das entries, e então por último pega os endereços resolvidos armazena na variavel ```addressToPath```, adiciona os endereços na base da dll em memória (deltaImageBase calculado anteriormente), por fim copia os endereços para a dll carregada em memória.
+Depois de separar todas as Entries elas são filtradas por ```type = 0``` (na doc da microsoft diz que o type 0 é "skipado"). Logo depois é calculado o RVA das relocations somando o endereço da tabela com os offsets das entries, e então por último pega os endereços resolvidos armazena na variavel ```addressToPath```, adiciona os endereços na base da dll em memória (deltaImageBase calculado anteriormente), por fim copia os endereços para a dll carregada em memória.
 
 - [https://0xrick.github.io/win-internals/pe7/](https://0xrick.github.io/win-internals/pe7/)
 - [https://www.ired.team/offensive-security/code-injection-process-injection/process-hollowing-and-pe-image-relocations#relocation](https://www.ired.team/offensive-security/code-injection-process-injection/process-hollowing-and-pe-image-relocations#relocation)
@@ -265,7 +274,7 @@ No final de cada loop tem ```++thunk``` para passar para o proxmo thunk e um ```
 }
 ```
 
-A parte final é simples, uma ```function pointer``` (ponteiro que aponta para um função) é criado somando o endereço base com o endereço do ```EntryPoint``` da dll. Basicamente essa function pointer está apontando para a ```DllMain``` que toda dll tem e da mesma forma os argumentos são passados chamando a DllMain com PROCESS_ATTACH.
+A parte final é simples, uma ```function pointer``` (ponteiro para uma função) é criado somando o endereço base com o endereço do ```EntryPoint``` da dll. Basicamente essa function pointer está apontando para a ```DllMain``` que toda dll tem e da mesma forma os argumentos são passados chamando a DllMain com PROCESS_ATTACH (nesse caso a dll que é recuperada da web).
 
 
 ## DEMO

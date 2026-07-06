@@ -27,7 +27,7 @@ Nesse artigo vamos ver como essa tecnica funciona e algumas variações das POC'
 
 Quando um programa precisa usar uma função ela é chamada a partir de uma dll, por exemplo a função ```OpenProcess``` necessita da dll ```kernel32.dll```, então a dll é carregada na memória, a função é chamada a partir da dll e depois é executada de fato (grosseiramente falando). 
 
-O ponto aqui é que toda essa execução acontece em ```User-Mode``` que é um camada de abstração usada por qualquer s.o para dividir a execução "high-level"(user-mode) e "low-level"(kernel-mode). Essa divisão ocorre para separar funcionalidades criticas que podem afetar o sistema, principalmente com funções que interagem com arquivos, memória, sockets de rede e etc.
+O ponto aqui é que toda essa execução acontece em ```User-Mode``` que é uma camada de abstração usada por qualquer s.o para dividir a execução "high-level"(user-mode) e "low-level"(kernel-mode). Essa divisão ocorre para separar funcionalidades criticas que podem afetar o sistema, principalmente com funções que interagem com arquivos, memória, sockets de rede e etc.
 
 No fluxo de execução de uma função no windows, primeiro o programa chama a função high-level, depois a execução é passada para a função low-level que faz as interações com o ```Kernel-Mode``` e por fim devolve o resultado das operações. No exemplo da ```OpenProcess``` a exeução é passada para a ```NtOpenProcess``` e a partir dela são feitas as operações de Kernel-Mode, como podemos ver no disassembly abaixo:
 
@@ -51,17 +51,17 @@ Até aqui vimos um resumo de como uma syscall legitima é executada, isso foi pa
 
 Agora que sabemos como uma função é executada e o que é uma syscall, vamos entender como os produtos de segurança (AV/EDR) usam isso para barrar programas maliciosos.
 
-Uma tecnica usada pelos AVs/EDRs é chamada de ```API hooking``` que consiste em basicamente desviar a execução de um função para um "lugar" onde é possivel analisar, modificar ou barrar essa função. A forma mais conhecida de é a ```Ìnline hooking``` que faz "hijack execution flow".
+Uma tecnica usada pelos AVs/EDRs é chamada de ```API hooking``` que consiste em basicamente desviar a execução de uma função para um "lugar" onde é possivel analisar, modificar ou barrar essa função. A forma mais conhecida é a ```Inline hooking``` que faz "hijack execution flow".
 
 No Windows isso é possivel atravez da [Detours Library](https://github.com/microsoft/detours) que permite manipular a execução de funções injetando codigo customizado...  Para a analise de chamadas de função é adicionado uma instrução de  ```unconditional jump (JMP)``` que redireciona para uma função escrita pelo próprio vendor de AV/EDR.
 
-Por de baixo dos panos esse processo funciona sobrescrevendo algumas intruções assembly inicias com o ```JMP``` que leva a execução para a função ```Detour```, função responsavel por analisar a função alvo. No meio disso uma função ```Trampolim``` é criada para preservar as instruções originais e retornar a execução da função que foi "hookada". Quando a função alvo ternima a execução a função Detour faz as ações necessarias (pré-definidas por quem escreveu a Detour) e retorna a execução ao fluxo original que geralmente é a ronita do Kernel-Mode.
+Por de baixo dos panos esse processo funciona sobrescrevendo algumas intruções assembly inicias com o ```JMP``` que leva a execução para a função ```Detour```, função responsavel por analisar a função alvo. No meio disso uma função ```Trampolim``` é criada para preservar as instruções originais e retornar a execução da função que foi "hookada". Quando a função alvo termina a execução, a função Detour ja fez as ações necessarias (pré-definidas por quem escreveu a Detour) e retorna a execução ao fluxo original que geralmente é a ronita do Kernel-Mode.
 
 
 ![apihooking1](/img/apihooking1.png)
 
 
-Resumindo, API hooking faz proxy da execução do função alvo e coletando informações sobre como ela foi invocada, e dependendo do que é analisado a execução é retomada ou não.
+Resumindo, API hooking faz proxy da execução do função alvo, coleta informações sobre como ela foi invocada, e dependendo do que é analisado a execução é retomada ou não.
 
 Essa é a solução que muitos AVs/EDRs usam para analise dinamica, eles fazem isso injectando suas próprias dlls nos processos spawnados pelo usuario inspecionando todas as funções marcadas como suspeitas.
 
@@ -119,7 +119,7 @@ A diferença para a ```Indirect syscall``` é pequena, na definição do assembl
 
 #### Manual syscall problem
 
-As tecnicas manuais de "direct" e "indirect" funcionam até certo ponto, o grande problema delas é a compatibilidade de versão, a cada versão ou build diferente do windows os numeros de syscall mudam fazendo ficar muito trabalhoso adaptar a deixar funcional para diferentes maquinas. Existem algums projetos que catalogaram as syscalls em diferentes versões mas mesmo assim não é algo pratico de usar. E fora o detalhe que manter os numeros das syscalls hardcoded não é uma boa pratical.
+As tecnicas manuais de "direct" e "indirect" funcionam até certo ponto, o grande problema delas é a compatibilidade de versão, a cada versão ou build diferente do windows os numeros de syscall mudam fazendo ficar muito trabalhoso adaptar a deixar funcional para diferentes maquinas. Existem algums projetos que catalogaram as syscalls em diferentes versões mas mesmo assim não é algo pratico de usar. E fora o detalhe que manter os numeros das syscalls hardcoded não é uma boa pratica.
 
 Desse problema surgiu a Poc ```Hells Gate``` que tem como a principal funcionalidade a resolução dos numeros das syscalls em runtime, removendo o obstaculo dos numeros fixos no código.
 
@@ -153,7 +153,7 @@ INT wmain() {
 		return 0x1;
 ```
 
-2) Recupeara o endereço da NTDLL atravez do campo ```PPEB_LDR_DATA LoaderData``` que permite enumerar dll carregadas na memória do processo, e depois ter acesso a Export Table da NTDLL com a função ```GetImageExportDirectory()```, essa função faz o parse dos PE headers até a EAT da NTDLL e armazena um ponteiro pra ela em ```pImageExportDirectory``` (no código tem comentários então fica mais explcativo).
+2) Recupera o endereço da NTDLL atravez do campo ```PPEB_LDR_DATA LoaderData``` que permite enumerar dlls carregadas na memória do processo, e depois ter acesso a Export Table da NTDLL com a função ```GetImageExportDirectory()```, essa função faz o parse dos PE headers até a EAT da NTDLL e armazena um ponteiro pra ela em ```pImageExportDirectory``` (no código tem comentários então fica mais explcativo).
 
 
 ```c
@@ -309,70 +309,63 @@ A lógica é simples, ao percorrer a EAT, se um ```jmp``` opcode ```e9``` for en
 
 ...
 
-for (WORD cx = 0; cx < pImageExportDirectory->NumberOfNames; cx++) {
-		PCHAR pczFunctionName = (PCHAR)((PBYTE)pModuleBase + pdwAddressOfNames[cx]);
-		PVOID pFunctionAddress = (PBYTE)pModuleBase + pdwAddressOfFunctions[pwAddressOfNameOrdinales[cx]];
 
-		if (djb2(pczFunctionName) == pVxTableEntry->dwHash) {
-			pVxTableEntry->pAddress = pFunctionAddress;
-
-			// First opcodes should be :
-			//    MOV R10, RCX
-			//    MOV RAX, <syscall>
-			if (*((PBYTE)pFunctionAddress) == 0x4c
-				&& *((PBYTE)pFunctionAddress + 1) == 0x8b
-				&& *((PBYTE)pFunctionAddress + 2) == 0xd1
-				&& *((PBYTE)pFunctionAddress + 3) == 0xb8
-				&& *((PBYTE)pFunctionAddress + 6) == 0x00
-				&& *((PBYTE)pFunctionAddress + 7) == 0x00) {
-			
-				BYTE high = *((PBYTE)pFunctionAddress + 5);
-				BYTE low = *((PBYTE)pFunctionAddress + 4);
-				pVxTableEntry->wSystemCall = (high << 8) | low;
+if (djb2(pczFunctionName) == pVxTableEntry->dwHash) {
+	pVxTableEntry->pAddress = pFunctionAddress;
+	// First opcodes should be :
+	//    MOV R10, RCX
+	//    MOV RAX, <syscall>
+	if (*((PBYTE)pFunctionAddress) == 0x4c
+		&& *((PBYTE)pFunctionAddress + 1) == 0x8b
+		&& *((PBYTE)pFunctionAddress + 2) == 0xd1
+		&& *((PBYTE)pFunctionAddress + 3) == 0xb8
+		&& *((PBYTE)pFunctionAddress + 6) == 0x00
+		&& *((PBYTE)pFunctionAddress + 7) == 0x00) {
+	
+		BYTE high = *((PBYTE)pFunctionAddress + 5);
+		BYTE low = *((PBYTE)pFunctionAddress + 4);
+		pVxTableEntry->wSystemCall = (high << 8) | low;
+		
+		return TRUE;
+	}
+	// if hooked check the neighborhood to find clean syscall
+	if (*((PBYTE)pFunctionAddress) == 0xe9) {
+		for (WORD idx = 1; idx <= 500; idx++) {
+			// check neighboring syscall down
+			if (*((PBYTE)pFunctionAddress + idx * DOWN) == 0x4c
+				&& *((PBYTE)pFunctionAddress + 1 + idx * DOWN) == 0x8b
+				&& *((PBYTE)pFunctionAddress + 2 + idx * DOWN) == 0xd1
+				&& *((PBYTE)pFunctionAddress + 3 + idx * DOWN) == 0xb8
+				&& *((PBYTE)pFunctionAddress + 6 + idx * DOWN) == 0x00
+				&& *((PBYTE)pFunctionAddress + 7 + idx * DOWN) == 0x00) {
+				BYTE high = *((PBYTE)pFunctionAddress + 5 + idx * DOWN);
+				BYTE low = *((PBYTE)pFunctionAddress + 4 + idx * DOWN);
+				pVxTableEntry->wSystemCall = (high << 8) | low - idx;
 				
 				return TRUE;
 			}
-
-			// if hooked check the neighborhood to find clean syscall
-			if (*((PBYTE)pFunctionAddress) == 0xe9) {
-
-				for (WORD idx = 1; idx <= 500; idx++) {
-					// check neighboring syscall down
-					if (*((PBYTE)pFunctionAddress + idx * DOWN) == 0x4c
-						&& *((PBYTE)pFunctionAddress + 1 + idx * DOWN) == 0x8b
-						&& *((PBYTE)pFunctionAddress + 2 + idx * DOWN) == 0xd1
-						&& *((PBYTE)pFunctionAddress + 3 + idx * DOWN) == 0xb8
-						&& *((PBYTE)pFunctionAddress + 6 + idx * DOWN) == 0x00
-						&& *((PBYTE)pFunctionAddress + 7 + idx * DOWN) == 0x00) {
-						BYTE high = *((PBYTE)pFunctionAddress + 5 + idx * DOWN);
-						BYTE low = *((PBYTE)pFunctionAddress + 4 + idx * DOWN);
-						pVxTableEntry->wSystemCall = (high << 8) | low - idx;
-						
-						return TRUE;
-					}
-					// check neighboring syscall up
-					if (*((PBYTE)pFunctionAddress + idx * UP) == 0x4c
-						&& *((PBYTE)pFunctionAddress + 1 + idx * UP) == 0x8b
-						&& *((PBYTE)pFunctionAddress + 2 + idx * UP) == 0xd1
-						&& *((PBYTE)pFunctionAddress + 3 + idx * UP) == 0xb8
-						&& *((PBYTE)pFunctionAddress + 6 + idx * UP) == 0x00
-						&& *((PBYTE)pFunctionAddress + 7 + idx * UP) == 0x00) {
-						BYTE high = *((PBYTE)pFunctionAddress + 5 + idx * UP);
-						BYTE low = *((PBYTE)pFunctionAddress + 4 + idx * UP);
-						pVxTableEntry->wSystemCall = (high << 8) | low + idx;
-						
-						return TRUE;
-					}
-
-				}
+			// check neighboring syscall up
+			if (*((PBYTE)pFunctionAddress + idx * UP) == 0x4c
+				&& *((PBYTE)pFunctionAddress + 1 + idx * UP) == 0x8b
+				&& *((PBYTE)pFunctionAddress + 2 + idx * UP) == 0xd1
+				&& *((PBYTE)pFunctionAddress + 3 + idx * UP) == 0xb8
+				&& *((PBYTE)pFunctionAddress + 6 + idx * UP) == 0x00
+				&& *((PBYTE)pFunctionAddress + 7 + idx * UP) == 0x00) {
+				BYTE high = *((PBYTE)pFunctionAddress + 5 + idx * UP);
+				BYTE low = *((PBYTE)pFunctionAddress + 4 + idx * UP);
+				pVxTableEntry->wSystemCall = (high << 8) | low + idx;
 				
-				return FALSE;
+				return TRUE;
 			}
 		}
+		
+		return FALSE;
 	}
+}
+
 ```
 
-Então como adivinhar o numero da syscall que foi hookada se não está lá? A reposta pra isso é simples também. Os numeros das syscall seguem um sequenca linear, ou seja, crescente e decrescente. Por exemplo, se uma syscall for a 27, a proxima estiver hookada, e a seguinte for 29, então a syscall hookada é a 28.
+Então como adivinhar o numero da syscall que foi hookada se não está lá? A reposta pra isso é simples também. Os numeros das syscall seguem uma sequencia linear, ou seja, crescente e decrescente. Por exemplo, se uma syscall for a 27, a proxima estiver hookada, e a seguinte for 29, então a syscall hookada é a 28.
 
 No código funciona assim: conforme o loop pular 32 bytes um valor de index é somado ou subtraido, quando uma syscall valida for encontrada, o numero da syscall é somado ou subtraido pelo numero do index (referente a quantas syscall a frente ou atras o loop pulou). Como é uma sequencia linear a syscall hookada é "adivinhada" pela matematica.
 
@@ -385,7 +378,7 @@ pVxTableEntry->wSystemCall = (high << 8) | low - idx;
 
 ### Tartarus Gate
 
-Da Poc Halos Gate pra ```Tartarus Gate``` a mudança é que foi adicionado mais dois loops que verificam três bytes a frente depois do inicio de cada função. Essa é feita porque em aguns casos o hook não é feito logo no inicio das funções, então os 3 primeiros bytes (```4c 8b d1 | mov r10, rcx```) ainda são os mesmos de um syscall padrão, isso enganaria a validação feito pelo Halos Gate que procura um ```jmp``` logo no começo.
+Da Poc Halos Gate pra ```Tartarus Gate``` a mudança é que foi adicionado mais dois loops que verificam três bytes a frente depois do inicio de cada função. Essa verificação é feita porque em aguns casos o hook não é feito logo no inicio das funções, então os 3 primeiros bytes (```4c 8b d1 | mov r10, rcx```) ainda são os mesmos de uma syscall padrão, isso enganaria a validação feito pelo Halos Gate que procura um ```jmp``` logo no começo.
 
 ```c
 if (*((PBYTE)pFunctionAddress + 3) == 0xe9) {
@@ -399,7 +392,7 @@ Outra coisa que o autor da Tartarus Gate fez foi adicionar algumas instruções 
 
 ### Outras variantes
 
-Alem das versões mais comuns que mantem a base de cógido original mudando pouca coisa, temos outras variantes em linguagens diferentes como C#, Rust, Golang e até Nim. Também existem algumas que se baseiam na tecnica de syscall mas ao invez de fazer "direct syscall", essas variantes modificaram o código para usar as "indiret syscall". Estou mencionando essas variantes pra deixar registrado aqui a quem for util saber, mas o foco desse artigo eram as POCs mais conhecidas, a ideia aqui era fornecer o entendimento base do código caso o leitor queira ir mais adiante.
+Alem das versões mais comuns que mantem a base de cógido original mudando pouca coisa, temos outras variantes em linguagens diferentes como C#, Rust, Golang e até Nim. Também existem algumas que se baseiam na tecnica de syscall mas ao invez de fazer "direct syscall", essas variantes modificaram o código para usar as "indirect syscall". Estou mencionando essas variantes pra deixar registrado aqui a quem for util saber, mas o foco desse artigo eram as POCs mais conhecidas, a ideia aqui era fornecer o entendimento base do código caso o leitor queira ir mais adiante.
 
 
 #### Referências
