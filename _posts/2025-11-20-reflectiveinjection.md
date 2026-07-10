@@ -34,11 +34,9 @@ O código da poc é um pouco grande então vou dividir em algumas partes para qu
 
 - Obs
 
-*Aqui temos dois cenarios para considerar: O primeiro é que a maioria das POCs de reflective dll injection são baseadas nesse projeto [ReflectiveDLLInjection](https://github.com/stephenfewer/ReflectiveDLLInjection) cirado por Stephen Fewer, na POC original (em algumas outras também) o código é dividido por ```Loader``` e a dll a ser injetada. O Loader contem toda a lógica responsavel pelo injeção e a dll contem o código malicioso. Então na POC original depende de uma dll a parte para ser injetada.*
+*As POCs de reflective dll injection são baseadas nesse projeto [ReflectiveDLLInjection](https://github.com/stephenfewer/ReflectiveDLLInjection) criado por Stephen Fewer, na POC original (em algumas outras também) o código é dividido por um ```Loader``` (a dll a ser injetada) e um ```Injector``` que injeta a dll reflexiva. O Loader contem toda a lógica responsavel pelo carregamento e execução da dll em memória. Então na POC o ```Injector``` injeta o ```Loader``` que carrega a si mesmo na memória. O código do Loader é de uma dll que percorre sua própria imagem, carrega uma cópia de si mesmo na memória e chama o próprio entrypoint.*
 
-*O segundo cenario é que em algumas variações por ai, ao invez de ter uma dll a parte, o Loader carrega a si mesmo. O código é de uma dll que percorre sua própria imagem, carrega um cópia de si mesmo na memória e chama o próprio entrypoint (essa é a base do beacon cobalt strike por exemplo).*
-
-*Nesse artigo abordaremos o primeiro cenario se baseando no artigo da TrustedSec (link a baixo).*
+*Nesse artigo abordaremos um cenario parecido se baseando no artigo da TrustedSec (link a baixo). O código também contém um ```Injector``` que injeta uma dll, mas nessa POC o injector contém a logica que carrega a dll também, então você pode passar qualquer dll para o injector que ele vai fazer os dois trabalhos, injetar e carragar a dll em memória. Esclarecido isso vamos lá.*
 
 O Delivery da dll pode ser feito de varias formas, a mais comum seria servir por algum web server, requisitar com um client http e depois armazenar em uma variavel do powershell por exemplo. Seja qual for o delivery você precisa ter em mente que a ideia é não deixar samples na maquina alvo. Como essa parte não é o foco vou deixar em aberto.
 
